@@ -1,0 +1,37 @@
+id,name,category_id
+1,Advanced Gunnery,1
+2,Blockade Run,1
+3,Close-Range Intel Scan,1
+4,Ion Storm,1
+5,Marked For Destruction,1
+6,Most Wanted,1
+7,Opening Salvo,1
+8,Precision Strike,1
+9,Rift Assault,1
+10,Station Assault,1
+11,Surprise Attack,1
+12,Targeting Beacons,1
+13,Abandoned Mining Facility,2
+14,Asteroid Tactics,2
+15,Capture The VIP,2
+16,Contested Outpost,2
+17,Fighter Ambush,2
+18,Fire Lanes,2
+19,Fleet Ambush,2
+20,Fleet In Being,2
+21,Hyperspace Assault,2
+22,Jamming Barrier,2
+23,Planetary Ion Cannon,2
+24,Rift Ambush,2
+25,Dangerous Territory,3
+26,Doomed Station,3
+27,Hyperspace Migration,3
+28,Infested Fields,3
+29,Intel Sweep,3
+30,Minefields,3
+31,Navigational Hazards,3
+32,Salvage Run,3
+33,Sensor Net,3
+34,Solar Corona,3
+35,Superior Positions,3
+36,Volatile Deposits,3
