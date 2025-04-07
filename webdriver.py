@@ -12,7 +12,8 @@ import time
 from bs4 import BeautifulSoup
 import event_to_file
 
-def parse_webpage(url, name, no_event_info=False):
+def parse_webpage(url, name, no_event_info=False,
+                  do_scores=True, do_fleets=True):
     chrome_options = Options()
     chrome_options.add_argument("--headless")
         
@@ -24,7 +25,9 @@ def parse_webpage(url, name, no_event_info=False):
     
     # Fleet info loaded into html source, just need to parse it
     soup = BeautifulSoup(driver.page_source, 'html5lib')
-    event_to_file.parse_site(soup, name, no_event_info)
+    kwargs = {'url': url, 'name': name, 'no_event_info': args.no_event_info,
+              'do_scores': True, 'do_fleets': True}
+    event_to_file.parse_site(soup, **kwargs)
     
     driver.quit()
     
@@ -41,4 +44,6 @@ if __name__ == '__main__':
     if not name:
         name = url.split("/")[-1]
     
-    parse_webpage(url, name, no_event_info = args.no_event_info)
+    kwargs = {'url': url, 'name': name, 'no_event_info': args.no_event_info,
+              'do_scores': True, 'do_fleets': True}
+    parse_webpage(**kwargs)
