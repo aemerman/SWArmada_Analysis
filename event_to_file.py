@@ -10,11 +10,189 @@ import json
 import os
 import fleet_parser
 import sqlite3
+import sql_queries
 
 # Replace tabs, commas etc in player names with spaces
 def clean_name(name):
     name = name.replace(',',' ')
     return ' '.join(name.strip().split())
+
+def get_last_primary_key(cursor):
+    res = cursor.execute('SELECT last_insert_rowid()')
+    try:
+        rowid = res.fetchone()[0]
+    except TypeError:
+        print('ERROR: failed to get last primary key!')
+        rowid = None
+    return rowid
+    
+def get_from_sql(cursor, query, params):
+    try:
+        res = cursor.execute(query, params)
+    except sqlite3.ProgrammingError as e:
+        print(f'ERROR: Faulty query: {e}')
+        print(query)
+        print(params)
+        return None
+    except sqlite3.OperationalError as e:
+        print(f'ERROR: Failed to run query: {e}')
+        print(query)
+        print(params)
+        return None
+    if not res or len(res.fetchall()) == 0:
+        return None
+    else:
+        return res.fetchall()
+
+def get_one_from_sql(cursor, query, params):
+    res = get_from_sql(cursor, query, params)
+    if res and len(res) == 1:
+        return res[0][0]
+    else:
+        return None
+
+# Try several methods to get ID. Name is enough to ID most things, and
+# name + faction or name + cost is enough for all. Cost and/or faction can
+# be used to ID things with typos in the name, but cost is the most likely
+# field to be missing or wrong. Faction may also be missing.
+# Strategy: Start with most precise and work down. Try faction + cost if all
+# others fail to maybe catch misspelled names. As a last resort, query the
+# user for the correct name and then rerun the function with new input
+def get_obj_id(cursor, obj, name, faction_id=None, cost=None):
+    def get_id_from_name_faction_cost(name, faction_id, cost):
+        if not faction_id or not cost:
+            return None
+        try:
+            query_str = getattr(sql_queries,
+                                f'get_{obj}_from_name_faction_cost')
+        except AttributeError:
+            return None
+        return get_from_sql(cursor, query_str, (name, faction_id, cost))
+    
+    def get_id_from_name_faction(name, faction_id):
+        if not faction_id:
+            return None
+        try:
+            query_str = getattr(sql_queries,
+                                f'get_{obj}_from_name_faction')
+        except AttributeError:
+            return None
+        return get_from_sql(cursor, query_str, (name, faction_id))
+    
+    def get_id_from_name_cost(name, cost):
+        if not cost:
+            return None
+        try:
+            query_str = getattr(sql_queries,
+                                f'get_{obj}_from_name_faction_cost')
+        except AttributeError:
+            return None
+        return get_from_sql(cursor, query_str, (name, cost))
+    
+    def get_id_from_name(name):
+        try:
+            query_str = getattr(sql_queries,
+                                f'get_{obj}_from_name')
+        except AttributeError:
+            return None
+        return get_from_sql(cursor, query_str, (name,))
+    
+    def get_id_from_faction_cost(faction_id, cost):
+        if not faction_id or not cost:
+            return None
+        try:
+            query_str = getattr(sql_queries,
+                                f'get_{obj}_from_faction_cost')
+        except AttributeError:
+            return None
+        return get_from_sql(cursor, query_str, (faction_id, cost))
+    
+    # Start from most precise and work down
+    obj_id = get_id_from_name_faction_cost(name, faction_id, cost)
+    if not obj_id:
+        obj_id = get_id_from_name_faction(name, faction_id)
+    if not obj_id:
+        obj_id = get_id_from_name_cost(name, cost)
+    if not obj_id:
+        obj_id = get_id_from_name(name)
+    if not obj_id: # In case of misspelled name
+        obj_id = get_id_from_faction_cost(faction_id, cost)
+    
+    if len(obj_id) == 1: # Positive ID, exactly one found
+        return obj_id[0][0]
+    elif len(obj_id) > 1: # Multiple matches found, need disambiguation
+        print(f'''Found multiple IDs for {obj} with name: {name},
+              faction_id: {faction_id}, cost: {cost}''')
+        print(obj_id)
+        new_name = input('Please provide disambiguated name:\n')
+        return get_obj_id(cursor, obj, new_name, faction_id, cost)
+    else: # No matches found, check with user
+        print(f'''Failed to find ID for {obj} with name: {name},
+              faction_id: {faction_id}, cost: {cost}''')
+        new_name = input('Please provide correct name:\n')
+        return get_obj_id(cursor, obj, new_name, faction_id, cost)
+
+# Take a fleet list in dictionary form, and make sure that all ships,
+# squadrons, and upgrades are listed in the database. Get ids for each so
+# that the fleet list can be properly added to the database.
+def apply_fleet_cleaning(cursor, fleet):
+    faction = fleet.get('faction', None)
+    # Try to get faction ID from name or alias. If that doesn't work,
+    # then try using ship names
+    faction_id = None
+    if faction:
+        # Stored faction names are one word, so split faction into
+        # tokens and check separately.
+        # Gets e.g. Rebel from 'Rebel Alliance'
+        tkns = faction.split()
+        for tkn in tkns:
+            tkn = tkn.strip(' ()').lower()
+            faction_id = get_one_from_sql(cursor, 
+                                          sql_queries.get_faction_from_name,
+                                          (tkn, tkn,))
+            if faction_id:
+                fleet['faction_id'] = faction_id
+                break
+    
+    for iis, ship in enumerate(fleet['ships']):
+        # Name is a required field and can be assumed to exist. Cost is not
+        name = ship.get('name', None)
+        cost = ship.get('base_cost', None)
+        
+        ship_id = get_obj_id(cursor, 'ship', name, faction_id, cost)
+        fleet['ships'][iis]['id'] = ship_id
+        
+        # Once the ship has been IDed, get faction ID if not yet available
+        if not faction_id:
+            faction_id = get_one_from_sql(cursor,
+                              sql_queries.get_faction_from_ship, (ship_id,))
+            fleet['faction_id'] = faction_id
+        
+        for iiu, upgrade in enumerate(ship['upgrades']):
+            name = upgrade.get('name', None)
+            cost = upgrade.get('cost', None)
+            
+            upgrade_id = get_obj_id(cursor, 'upgrade', name, faction_id, cost)
+            fleet['ships'][iis]['upgrades'][iiu]['id'] = upgrade_id
+
+    for iiq, squad in enumerate(fleet['squadrons']):
+        name = squad.get('name', None)
+        cost = squad.get('cost', None)
+        
+        squad_id = get_obj_id(cursor, 'squadron', name, faction_id, cost)
+        fleet['squadrons'][iiq]['id'] = squad_id
+    
+    # Get fleet admiral from upgrades list if not provided in json
+    commander = fleet.get('commander', None)
+    if not commander:
+        upgrades = {}
+        for ship in fleet['ships']:
+            for upgrade in ship['upgrades']:
+                upgrades[upgrade['name']] = upgrade['id']
+        commander = get_one_from_sql(cursor,
+                         sql_queries.get_commander_from_upgrades,
+                         (json.dumps(upgrades),))
+        fleet['commander'] = commander
 
 # Parse fleet lists
 # - Fleet lists are read as text strings with no standard format
@@ -29,13 +207,10 @@ def clean_name(name):
 # include it.
 # - Lists may contain a header with a fleet name, faction, commander,
 # total points cost, objectives, etc.
-def get_fleet_lists(fleets, base_dir, ev_name, ev_id, ship_id):
-    dict_fleets = {"id": [], "player": [], "event_id": [], "faction_name": [],
-                   "commander": []}
-    dict_ships = {"id": [], "fleet_id": [], "ship_name": []}
-    dict_upgrades = {"upgrade_name": [], "fleet_id": [], "fleet_ship_id": []}
-    dict_squadrons = {"squadron_name": [], "fleet_id": [], "count": []}
-    fleet_id = 1
+def get_fleet_lists(fleets, conn, ev_id):
+    
+    cursor = conn.cursor()
+
     for child in fleets.children:
         divs = child.find_all('div')
         name = clean_name(divs[0].span.span.text)
@@ -46,92 +221,113 @@ def get_fleet_lists(fleets, base_dir, ev_name, ev_id, ship_id):
         fleet = fleet_parser.parse_fleet(raw_fleet)
         if not fleet:
             # store info for debugging
-            filename = f'{base_dir}/raw/{ev_name}/{name}.json'
+            filename = f'logs/{ev_id}_{"_".join(name.split())}.json'
             os.makedirs(os.path.dirname(filename), exist_ok=True)
             with open(filename, 'w') as f:
                 f.write(json.dumps(fleet, indent=2))
             continue
         
-        faction = fleet.get('faction', '')
-        commander = fleet.get('commander', '')
+        # Fleet list has been converted into a dictionary, but values may
+        # not be suitable for adding to database. Some data cleaning needs
+        # to be done first.
+        # Do not add fleet to database until cleaning steps are done.
+        fleet = apply_fleet_cleaning(fleet)
         
-        dict_fleets['id'].append(fleet_id)
-        dict_fleets['player'].append(name)
-        dict_fleets['event_id'].append(ev_id)
-        dict_fleets['faction_name'].append(faction)
-        dict_fleets['commander'].append(commander)
+        # Now check that all values have been properly validated and, if so,
+        # add the fleet list to the database
+        insert_fleet_str = """
+        INSERT INTO Fleets (player, event_id, faction_id, commander)
+        VALUES (?, ?, ?, ?)
+        """
+        insert_ship_str = """
+        INSERT INTO Fleets_Ships (fleet_id, ship_id) VALUES (?, ?)
+        """
+        insert_upgrades_str = """
+        INSERT INTO Fleets_Upgrades (fleet_id, upgrade_id, ship_id)
+        VALUES (?, ?, ?)
+        """
+        insert_squadrons_str = """
+        INSERT INTO Fleets_Squadrons (fleet_id, squadron_id, count)
+        VALUES (?, ?, ?)
+        """
+        
+        fleet_values = (name, ev_id, faction_id, commander,)
+        cursor.execute(insert_fleet_str, fleet_values)
+        conn.commit()
+        
+        #Get the newly generated id from Fleets
+        fleet_id = get_last_primary_key('Fleets', cursor)
+        if not fleet_id:
+            break
         
         for ship in fleet['ships']:
-            dict_ships['id'].append(ship_id)
-            dict_ships['fleet_id'].append(fleet_id)
-            dict_ships['ship_name'].append(ship['name'])
+            ship_values = (fleet_id, ship['id'],)
+            cursor.execute(insert_ship_str, ship_values)
+            conn.commit()
+            
+            fleet_ship_id = get_last_primary_key('Ships', cursor)
+            if not fleet_ship_id:
+                continue
+            
             for upgrade in ship['upgrades']:
-                dict_upgrades['upgrade_name'].append(upgrade['name'])
-                dict_upgrades['fleet_id'].append(fleet_id)
-                dict_upgrades['fleet_ship_id'].append(ship_id)
-            ship_id += 1
+                upgrade_values = (upgrade['id'], fleet_id, fleet_ship_id,)
+                cursor.execute(insert_upgrades_str, upgrade_values)
+                
         for squad in fleet['squadrons']:
-            dict_squadrons['squadron_name'].append(squad['name'])
-            dict_squadrons['fleet_id'].append(fleet_id)
-            dict_squadrons['count'].append(squad.get('count', 1)) 
-        fleet_id += 1
-    df_fleets = pd.DataFrame(dict_fleets)
-    df_fleets.to_csv(f'{base_dir}/armada_fleets.csv', mode='a',
-                     header=False, index=False)
-    df_ships = pd.DataFrame(dict_ships)
-    df_ships.to_csv(f'{base_dir}/armada_fleets_ships.csv', mode='a',
-                     header=False, index=False)
-    df_upgrades = pd.DataFrame(dict_upgrades)
-    df_upgrades.to_csv(f'{base_dir}/armada_fleets_upgrades.csv', mode='a',
-                     header=False, index=False)
-    df_squadrons = pd.DataFrame(dict_squadrons)
-    df_squadrons.to_csv(f'{base_dir}/armada_fleets_squadrons.csv', mode='a',
-                     header=False, index=False)
+            count = squad.get('count', 1)
+            squad_values = (squad['id'], fleet_id, count,)
+            cursor.execute(insert_squadrons_str, squad_values)
+        conn.commit()
 
-def get_scores(rounds, cursor, ev_id):
+def get_scores(rounds, conn, ev_id):
     
-    insert_str = 'INSERT INTO Scores VALUES\n'
+    cursor = conn.cursor()
+    insert_str = 'INSERT INTO Scores VALUES (?, ?, ?, ?, ?, ?)'
+    insert_values = []
     rounds = rounds.find_all('div', {'role': 'tabpanel'})
     print(f'found {len(rounds)} rounds')
     for ii, rnd in enumerate(rounds):
         rows = rnd.find_all('div', {'class': 'col-11'})
-        print(f'round {ii+1}: found {len(rows)} games')
+        print(f'round {ii+1}: found {len(rows)} rows')
         for row in rows:
             info = row.find_all('span')
             if len(info) == 6:
-                playerA = f'"{clean_name(info[0].text)}"'
+                playerA = clean_name(info[0].text)
                 ptsA = int(info[1].text)
-                playerB = f'"{clean_name(info[3].text)}"'
+                playerB = clean_name(info[3].text)
                 ptsB = int(info[4].text)
             elif len(info) == 4:
                 if info[0].text == 'Bye':
                     playerA = None
                     ptsA = None
-                    playerB = f'"{clean_name(info[1].text)}"'
+                    playerB = clean_name(info[1].text)
                     ptsB = 140
-                else:
-                    playerA = f'"{clean_name(info[0].text)}"'
+                elif info[3].text == 'Bye':
+                    playerA = clean_name(info[0].text)
                     ptsA = 140
                     playerB = None
                     ptsB = None
+                else:
+                    continue
             else:
                 continue
             
-            insert_str += f'({playerA}, {ptsA}, {playerB}, {ptsB}),\n'
-    insert_str = insert_str[:-2] + ';'
-    print('INFO: Scores are:')
-    print(insert_str)
-    cursor.execute(insert_str)
+            insert_values += [(ev_id, ii+1, playerA, ptsA, playerB, ptsB)]
+
+    cursor.executemany(insert_str, insert_values)
+    conn.commit()
     
-def parse_site(soup, url, ev_name, no_event_info=False,
+def parse_site(soup, url, name, no_event_info=False,
                   do_scores=True, do_fleets=True):
     sql_path = 'data/armada_events.sql'
     conn = sqlite3.connect(sql_path)
     cursor = conn.cursor()
     
     # Check if event already in DB. If not, add to Events table
-    res = cursor.execute(f'SELECT id FROM Events WHERE name = {ev_name}')
-    if not res:
+    res = cursor.execute(sql_queries.get_event_by_url, (url,))
+    try:
+        ev_id = res.fetchone()[0]
+    except TypeError:
         select_str = 'div.pt-3.small.row div.col:has(> i.bi.bi-calendar3)'
         ev_date = soup.select_one(select_str).text
         ev_date = ev_date.replace(',','').split()[1:]
@@ -144,38 +340,22 @@ def parse_site(soup, url, ev_name, no_event_info=False,
         ev_region = soup.select_one(select_str).text
         print(f'date: {ev_date}, region: {ev_region}')
         
-        insert_str = f'''
-        INSERT INTO Events (name, url, date, region)
-        VALUES ("{ev_name}", "{url}", "{ev_date}", "{ev_region}");
-        '''
-        cursor.execute(insert_str)
+        insert_str = 'INSERT INTO Events (name, url, date, region) ' \
+            + 'VALUES (?, ?, ?, ?)'
+        insert_values = (name, url, ev_date, ev_region,)
+        
+        cursor.execute(insert_str, insert_values)
         conn.commit()
-    
-    res = cursor.execute(f'SELECT id FROM Events WHERE name = {ev_name}')
-    ev_id = res.fetchone()[0]
+        
+        ev_id = get_last_primary_key(cursor)
     
     # add results to event_results csv
     if do_scores:
         rounds = soup.find(id='uncontrolled-tab-example-tabpane-rounds')
-        get_scores(rounds, cursor, ev_id)
-    
-    ship_id = 1
-    try:
-        with open(f'{base_dir}/armada_fleets_ships.csv', 'r') as f:
-            ship_id = int(f.readlines()[-1].split(',')[0]) + 1
-    except Exception as e:
-        print(f'Failed to get ship_id: {e}')
+        get_scores(rounds, conn, ev_id)
+        conn.commit()
 
     if do_fleets:
         fleets = soup.find(id='uncontrolled-tab-example-tabpane-lists')
-        get_fleet_lists(fleets, base_dir, ev_name, ev_id, ship_id)
-    
-    if no_event_info:
-        return
-    # add event info to events csv
-    select_str = 'div.pt-3.small.row div.col:has(> i.bi.bi-calendar3)'
-    ev_date = soup.select_one(select_str).text
-    ev_date = ev_date.replace(',','').split()[1:]
-    with open(f'{base_dir}/armada_events.csv', 'a') as f:
-        f.write(",".join([str(ev_id), ev_name, *ev_date]))
+        get_fleet_lists(fleets, conn, ev_id)
     
