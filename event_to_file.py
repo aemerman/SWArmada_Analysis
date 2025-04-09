@@ -9,6 +9,7 @@ import pandas as pd
 import json
 import os
 import fleet_parser
+import sqlite3
 
 # Replace tabs, commas etc in player names with spaces
 def clean_name(name):
@@ -28,7 +29,7 @@ def clean_name(name):
 # include it.
 # - Lists may contain a header with a fleet name, faction, commander,
 # total points cost, objectives, etc.
-def do_fleet_lists(fleets, base_dir, ev_name, ev_id, ship_id):
+def get_fleet_lists(fleets, base_dir, ev_name, ev_id, ship_id):
     dict_fleets = {"id": [], "player": [], "event_id": [], "faction_name": [],
                    "commander": []}
     dict_ships = {"id": [], "fleet_id": [], "ship_name": []}
@@ -87,38 +88,77 @@ def do_fleet_lists(fleets, base_dir, ev_name, ev_id, ship_id):
     df_squadrons.to_csv(f'{base_dir}/armada_fleets_squadrons.csv', mode='a',
                      header=False, index=False)
 
-def do_scores(rounds, base_dir, ev_id):
-    dict_scores = {"event_id": [], "round": [],
-                   "playerA": [], "pointsA": [],
-                   "playerB": [], "pointsB": []}
+def get_scores(rounds, cursor, ev_id):
     
+    insert_str = 'INSERT INTO Scores VALUES\n'
     rounds = rounds.find_all('div', {'role': 'tabpanel'})
     print(f'found {len(rounds)} rounds')
     for ii, rnd in enumerate(rounds):
         rows = rnd.find_all('div', {'class': 'col-11'})
-        print(f'round {ii+1}: found {len(rows)} rows')
+        print(f'round {ii+1}: found {len(rows)} games')
         for row in rows:
             info = row.find_all('span')
-            if len(info) != 6:
+            if len(info) == 6:
+                playerA = f'"{clean_name(info[0].text)}"'
+                ptsA = int(info[1].text)
+                playerB = f'"{clean_name(info[3].text)}"'
+                ptsB = int(info[4].text)
+            elif len(info) == 4:
+                if info[0].text == 'Bye':
+                    playerA = None
+                    ptsA = None
+                    playerB = f'"{clean_name(info[1].text)}"'
+                    ptsB = 140
+                else:
+                    playerA = f'"{clean_name(info[0].text)}"'
+                    ptsA = 140
+                    playerB = None
+                    ptsB = None
+            else:
                 continue
-            dict_scores['event_id'].append(ev_id)
-            dict_scores['round'].append(ii+1)
-            dict_scores['playerA'].append(clean_name(info[0].text))
-            dict_scores['pointsA'].append(int(info[1].text))
-            dict_scores['playerB'].append(clean_name(info[3].text))
-            dict_scores['pointsB'].append(int(info[4].text))
-                
-    df_scores = pd.DataFrame(dict_scores)
-    df_scores.to_csv(f'{base_dir}/armada_scores.csv', mode='a',
-                     header=False, index=False)
+            
+            insert_str += f'({playerA}, {ptsA}, {playerB}, {ptsB}),\n'
+    insert_str = insert_str[:-2] + ';'
+    print('INFO: Scores are:')
+    print(insert_str)
+    cursor.execute(insert_str)
     
-def parse_site(soup, ev_name, no_event_info=False, parse_args=None):
-    base_dir = 'data/events'
-    df_events = pd.read_csv(f'{base_dir}/armada_events.csv')
-    if ev_name in df_events['name'].values:
-        ev_id = df_events[df_events['name'] == ev_name]['id'].values[0]
-    else:
-        ev_id = df_events['id'].max() + 1
+def parse_site(soup, url, ev_name, no_event_info=False,
+                  do_scores=True, do_fleets=True):
+    sql_path = 'data/armada_events.sql'
+    conn = sqlite3.connect(sql_path)
+    cursor = conn.cursor()
+    
+    # Check if event already in DB. If not, add to Events table
+    res = cursor.execute(f'SELECT id FROM Events WHERE name = {ev_name}')
+    if not res:
+        select_str = 'div.pt-3.small.row div.col:has(> i.bi.bi-calendar3)'
+        ev_date = soup.select_one(select_str).text
+        ev_date = ev_date.replace(',','').split()[1:]
+        month = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+                 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+        ev_mon = month.index(ev_date[1])
+        ev_date = f'{ev_date[2]}-{ev_mon:02}-{ev_date[0]:02}'
+        
+        select_str = 'div.pt-3.small.row div.col:has(> i.bi.bi-globe)'
+        ev_region = soup.select_one(select_str).text
+        print(f'date: {ev_date}, region: {ev_region}')
+        
+        insert_str = f'''
+        INSERT INTO Events (name, url, date, region)
+        VALUES ("{ev_name}", "{url}", "{ev_date}", "{ev_region}");
+        '''
+        cursor.execute(insert_str)
+        conn.commit()
+    
+    res = cursor.execute(f'SELECT id FROM Events WHERE name = {ev_name}')
+    ev_id = res.fetchone()[0]
+    
+    # add results to event_results csv
+    if do_scores:
+        rounds = soup.find(id='uncontrolled-tab-example-tabpane-rounds')
+        get_scores(rounds, cursor, ev_id)
+    
     ship_id = 1
     try:
         with open(f'{base_dir}/armada_fleets_ships.csv', 'r') as f:
@@ -126,8 +166,9 @@ def parse_site(soup, ev_name, no_event_info=False, parse_args=None):
     except Exception as e:
         print(f'Failed to get ship_id: {e}')
 
-    fleets = soup.find(id='uncontrolled-tab-example-tabpane-lists')
-    do_fleet_lists(fleets, base_dir, ev_name, ev_id, ship_id)
+    if do_fleets:
+        fleets = soup.find(id='uncontrolled-tab-example-tabpane-lists')
+        get_fleet_lists(fleets, base_dir, ev_name, ev_id, ship_id)
     
     if no_event_info:
         return
@@ -138,6 +179,3 @@ def parse_site(soup, ev_name, no_event_info=False, parse_args=None):
     with open(f'{base_dir}/armada_events.csv', 'a') as f:
         f.write(",".join([str(ev_id), ev_name, *ev_date]))
     
-    # add results to event_results csv
-    rounds = soup.find(id='uncontrolled-tab-example-tabpane-rounds')
-    do_scores(rounds, base_dir, ev_id)
