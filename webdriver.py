@@ -26,7 +26,7 @@ def parse_webpage(url, name, no_event_info=False,
     # Fleet info loaded into html source, just need to parse it
     soup = BeautifulSoup(driver.page_source, 'html5lib')
     kwargs = {'url': url, 'name': name, 'no_event_info': args.no_event_info,
-              'do_scores': True, 'do_fleets': True}
+              'do_scores': do_scores, 'do_fleets': do_fleets}
     event_to_file.parse_site(soup, **kwargs)
     
     driver.quit()

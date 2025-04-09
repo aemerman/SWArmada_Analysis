@@ -114,9 +114,10 @@ def parse_fleet_llm(fleet):
     I want to convert a Star Wars Armada fleet list into a standardized format
     for analysis. The fleet list will contain a paragraphs listing the upgrades
     for each ship in the fleet, and potentially a paragraph listing the
-    squadrons in the fleet. The fleet list may include the costs of each ship,
-    squadron and upgrade, as well as metadata such as the name, faction and
-    commander of the fleet.
+    squadrons in the fleet. Each line will only contain one ship, upgrade or
+    squadron. The fleet list may include the costs of each ship, squadron and
+    upgrade, as well as metadata such as the name, faction and commander of
+    the fleet.
 
     # RESPONSE #
     Return the fleet list in the following JSON format:
