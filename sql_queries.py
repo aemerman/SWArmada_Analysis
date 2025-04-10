@@ -46,25 +46,30 @@ LEFT JOIN Ships AS s ON n.ship_id = s.id
 WHERE LOWER(n.name) = ? AND s.faction_id = ? AND s.cost = ?
 """
 
+get_ship_from_faction_cost = """
+SELECT id FROM Ships
+WHERE faction_id = ? AND cost = ?
+"""
+
 get_upgrade_from_name = """
-SELECT upgrade_id FROM UpgradeNames 
+SELECT upgrade_id FROM UpgradeNames
 WHERE LOWER(name) = ?
 """
 
 get_upgrade_from_name_faction = """
-SELECT upgrade_id FROM UpgradeNames AS n
+SELECT n.upgrade_id FROM UpgradeNames AS n
 LEFT JOIN Upgrades_Factions AS f ON f.upgrade_id = n.upgrade_id
 WHERE LOWER(n.name) = ? AND f.faction_id = ?
 """
 
 get_upgrade_from_name_cost = """
-SELECT upgrade_id FROM UpgradeNames AS n
+SELECT n.upgrade_id FROM UpgradeNames AS n
 LEFT JOIN Upgrades AS u ON u.id = n.upgrade_id
 WHERE LOWER(n.name) = ? AND u.cost = ?
 """
 
 get_upgrade_from_name_faction_cost = """
-SELECT upgrade_id FROM UpgradeNames AS n
+SELECT n.upgrade_id FROM UpgradeNames AS n
 LEFT JOIN Upgrades_Factions AS f ON f.upgrade_id = n.upgrade_id
 LEFT JOIN Upgrades AS u ON u.id = n.upgrade_id
 WHERE LOWER(n.name) = ? AND f.faction_id = ? AND u.cost = ?

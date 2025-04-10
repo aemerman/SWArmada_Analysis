@@ -25,10 +25,10 @@ def get_last_primary_key(cursor):
         print('ERROR: failed to get last primary key!')
         rowid = None
     return rowid
-    
-def get_from_sql(cursor, query, params):
+
+def get_from_sql(cursor, query, params=()):
     try:
-        res = cursor.execute(query, params)
+        res = cursor.execute(query, params).fetchall()
     except sqlite3.ProgrammingError as e:
         print(f'ERROR: Faulty query: {e}')
         print(query)
@@ -39,10 +39,10 @@ def get_from_sql(cursor, query, params):
         print(query)
         print(params)
         return None
-    if not res or len(res.fetchall()) == 0:
+    if not res or len(res) < 1:
         return None
     else:
-        return res.fetchall()
+        return res
 
 def get_one_from_sql(cursor, query, params):
     res = get_from_sql(cursor, query, params)
@@ -59,6 +59,9 @@ def get_one_from_sql(cursor, query, params):
 # others fail to maybe catch misspelled names. As a last resort, query the
 # user for the correct name and then rerun the function with new input
 def get_obj_id(cursor, obj, name, faction_id=None, cost=None):
+    # name must be lower case
+    name = name.lower()
+
     def get_id_from_name_faction_cost(name, faction_id, cost):
         if not faction_id or not cost:
             return None
@@ -78,17 +81,17 @@ def get_obj_id(cursor, obj, name, faction_id=None, cost=None):
         except AttributeError:
             return None
         return get_from_sql(cursor, query_str, (name, faction_id))
-    
+
     def get_id_from_name_cost(name, cost):
         if not cost:
             return None
         try:
             query_str = getattr(sql_queries,
-                                f'get_{obj}_from_name_faction_cost')
+                                f'get_{obj}_from_name_cost')
         except AttributeError:
             return None
         return get_from_sql(cursor, query_str, (name, cost))
-    
+
     def get_id_from_name(name):
         try:
             query_str = getattr(sql_queries,
@@ -117,19 +120,21 @@ def get_obj_id(cursor, obj, name, faction_id=None, cost=None):
         obj_id = get_id_from_name(name)
     if not obj_id: # In case of misspelled name
         obj_id = get_id_from_faction_cost(faction_id, cost)
-    
-    if len(obj_id) == 1: # Positive ID, exactly one found
+
+    if not obj_id or len(obj_id) == 0: # No matches found, check with user
+        print(f'''Failed to find ID for {obj} with name: "{name}",
+              faction_id: {faction_id}, cost: {cost}''')
+        new_name = input('Please provide correct name:\n')
+        return get_obj_id(cursor, obj, new_name, faction_id, cost)
+
+    elif len(obj_id) == 1: # Positive ID, exactly one found
         return obj_id[0][0]
-    elif len(obj_id) > 1: # Multiple matches found, need disambiguation
-        print(f'''Found multiple IDs for {obj} with name: {name},
+
+    else: # Multiple matches found, need disambiguation
+        print(f'''Found multiple IDs for {obj} with name: "{name}",
               faction_id: {faction_id}, cost: {cost}''')
         print(obj_id)
         new_name = input('Please provide disambiguated name:\n')
-        return get_obj_id(cursor, obj, new_name, faction_id, cost)
-    else: # No matches found, check with user
-        print(f'''Failed to find ID for {obj} with name: {name},
-              faction_id: {faction_id}, cost: {cost}''')
-        new_name = input('Please provide correct name:\n')
         return get_obj_id(cursor, obj, new_name, faction_id, cost)
 
 # Take a fleet list in dictionary form, and make sure that all ships,
@@ -193,6 +198,7 @@ def apply_fleet_cleaning(cursor, fleet):
                          sql_queries.get_commander_from_upgrades,
                          (json.dumps(upgrades),))
         fleet['commander'] = commander
+    return fleet
 
 # Parse fleet lists
 # - Fleet lists are read as text strings with no standard format
@@ -225,14 +231,15 @@ def get_fleet_lists(fleets, conn, ev_id):
             os.makedirs(os.path.dirname(filename), exist_ok=True)
             with open(filename, 'w') as f:
                 f.write(json.dumps(fleet, indent=2))
+
             continue
-        
+
         # Fleet list has been converted into a dictionary, but values may
         # not be suitable for adding to database. Some data cleaning needs
         # to be done first.
         # Do not add fleet to database until cleaning steps are done.
-        fleet = apply_fleet_cleaning(fleet)
-        
+        fleet = apply_fleet_cleaning(cursor, fleet)
+
         # Now check that all values have been properly validated and, if so,
         # add the fleet list to the database
         insert_fleet_str = """
@@ -250,29 +257,31 @@ def get_fleet_lists(fleets, conn, ev_id):
         INSERT INTO Fleets_Squadrons (fleet_id, squadron_id, count)
         VALUES (?, ?, ?)
         """
-        
+
+        faction_id = fleet.get('faction_id', None)
+        commander = fleet.get('commander', None)
         fleet_values = (name, ev_id, faction_id, commander,)
         cursor.execute(insert_fleet_str, fleet_values)
         conn.commit()
-        
+
         #Get the newly generated id from Fleets
-        fleet_id = get_last_primary_key('Fleets', cursor)
+        fleet_id = get_last_primary_key(cursor)
         if not fleet_id:
             break
-        
+
         for ship in fleet['ships']:
             ship_values = (fleet_id, ship['id'],)
             cursor.execute(insert_ship_str, ship_values)
             conn.commit()
-            
-            fleet_ship_id = get_last_primary_key('Ships', cursor)
+
+            fleet_ship_id = get_last_primary_key(cursor)
             if not fleet_ship_id:
                 continue
-            
+
             for upgrade in ship['upgrades']:
                 upgrade_values = (upgrade['id'], fleet_id, fleet_ship_id,)
                 cursor.execute(insert_upgrades_str, upgrade_values)
-                
+
         for squad in fleet['squadrons']:
             count = squad.get('count', 1)
             squad_values = (squad['id'], fleet_id, count,)
