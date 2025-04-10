@@ -71,7 +71,7 @@ def get_obj_id(cursor, obj, name, faction_id=None, cost=None):
         except AttributeError:
             return None
         return get_from_sql(cursor, query_str, (name, faction_id, cost))
-    
+
     def get_id_from_name_faction(name, faction_id):
         if not faction_id:
             return None
@@ -99,7 +99,7 @@ def get_obj_id(cursor, obj, name, faction_id=None, cost=None):
         except AttributeError:
             return None
         return get_from_sql(cursor, query_str, (name,))
-    
+
     def get_id_from_faction_cost(faction_id, cost):
         if not faction_id or not cost:
             return None
@@ -109,7 +109,7 @@ def get_obj_id(cursor, obj, name, faction_id=None, cost=None):
         except AttributeError:
             return None
         return get_from_sql(cursor, query_str, (faction_id, cost))
-    
+
     # Start from most precise and work down
     obj_id = get_id_from_name_faction_cost(name, faction_id, cost)
     if not obj_id:
@@ -144,6 +144,7 @@ def apply_fleet_cleaning(cursor, fleet):
     faction = fleet.get('faction', None)
     # Try to get faction ID from name or alias. If that doesn't work,
     # then try using ship names
+
     faction_id = None
     if faction:
         # Stored faction names are one word, so split faction into
@@ -152,41 +153,42 @@ def apply_fleet_cleaning(cursor, fleet):
         tkns = faction.split()
         for tkn in tkns:
             tkn = tkn.strip(' ()').lower()
-            faction_id = get_one_from_sql(cursor, 
+            faction_id = get_one_from_sql(cursor,
                                           sql_queries.get_faction_from_name,
                                           (tkn, tkn,))
             if faction_id:
                 fleet['faction_id'] = faction_id
                 break
-    
+
     for iis, ship in enumerate(fleet['ships']):
         # Name is a required field and can be assumed to exist. Cost is not
         name = ship.get('name', None)
         cost = ship.get('base_cost', None)
-        
+
         ship_id = get_obj_id(cursor, 'ship', name, faction_id, cost)
         fleet['ships'][iis]['id'] = ship_id
-        
+
         # Once the ship has been IDed, get faction ID if not yet available
         if not faction_id:
             faction_id = get_one_from_sql(cursor,
                               sql_queries.get_faction_from_ship, (ship_id,))
             fleet['faction_id'] = faction_id
-        
+
         for iiu, upgrade in enumerate(ship['upgrades']):
             name = upgrade.get('name', None)
             cost = upgrade.get('cost', None)
-            
+
             upgrade_id = get_obj_id(cursor, 'upgrade', name, faction_id, cost)
             fleet['ships'][iis]['upgrades'][iiu]['id'] = upgrade_id
 
     for iiq, squad in enumerate(fleet['squadrons']):
         name = squad.get('name', None)
         cost = squad.get('cost', None)
-        
-        squad_id = get_obj_id(cursor, 'squadron', name, faction_id, cost)
+
+        squad_id = get_obj_id(cursor, 'squadron', name, faction_id,
+                              cost)
         fleet['squadrons'][iiq]['id'] = squad_id
-    
+
     # Get fleet admiral from upgrades list if not provided in json
     commander = fleet.get('commander', None)
     if not commander:
@@ -214,12 +216,17 @@ def apply_fleet_cleaning(cursor, fleet):
 # - Lists may contain a header with a fleet name, faction, commander,
 # total points cost, objectives, etc.
 def get_fleet_lists(fleets, conn, ev_id):
-    
+
     cursor = conn.cursor()
 
     for child in fleets.children:
         divs = child.find_all('div')
         name = clean_name(divs[0].span.span.text)
+        # Check if this fleet is already in the database. Don't duplicate
+        if len(name) > 0 and get_from_sql(cursor,
+                                sql_queries.get_fleet_from_event_player,
+                                (ev_id, name)):
+            continue
         print(f"parsing fleet list of {name}")
         raw_fleet = divs[1].pre.text
         # Fleet list naturally represented in dictionary format. Start here
@@ -289,7 +296,7 @@ def get_fleet_lists(fleets, conn, ev_id):
         conn.commit()
 
 def get_scores(rounds, conn, ev_id):
-    
+
     cursor = conn.cursor()
     insert_str = 'INSERT INTO Scores VALUES (?, ?, ?, ?, ?, ?)'
     insert_values = []
@@ -320,22 +327,23 @@ def get_scores(rounds, conn, ev_id):
                     continue
             else:
                 continue
-            
+
             insert_values += [(ev_id, ii+1, playerA, ptsA, playerB, ptsB)]
 
     cursor.executemany(insert_str, insert_values)
     conn.commit()
-    
+
 def parse_site(soup, url, name, no_event_info=False,
                   do_scores=True, do_fleets=True):
     sql_path = 'data/armada_events.sql'
     conn = sqlite3.connect(sql_path)
     cursor = conn.cursor()
-    
+
     # Check if event already in DB. If not, add to Events table
-    res = cursor.execute(sql_queries.get_event_by_url, (url,))
+    res = get_one_from_sql(cursor, sql_queries.get_event_from_url, (url,))
     try:
-        ev_id = res.fetchone()[0]
+        ev_id = res
+        print(f'Found matching event with ID: {ev_id}')
     except TypeError:
         select_str = 'div.pt-3.small.row div.col:has(> i.bi.bi-calendar3)'
         ev_date = soup.select_one(select_str).text
@@ -344,20 +352,21 @@ def parse_site(soup, url, name, no_event_info=False,
                  'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
         ev_mon = month.index(ev_date[1])
         ev_date = f'{ev_date[2]}-{ev_mon:02}-{ev_date[0]:02}'
-        
+
         select_str = 'div.pt-3.small.row div.col:has(> i.bi.bi-globe)'
         ev_region = soup.select_one(select_str).text
         print(f'date: {ev_date}, region: {ev_region}')
-        
+
         insert_str = 'INSERT INTO Events (name, url, date, region) ' \
             + 'VALUES (?, ?, ?, ?)'
         insert_values = (name, url, ev_date, ev_region,)
-        
+
         cursor.execute(insert_str, insert_values)
         conn.commit()
-        
+
         ev_id = get_last_primary_key(cursor)
-    
+        print(f'Added new event with ID: {ev_id}')
+
     # add results to event_results csv
     if do_scores:
         rounds = soup.find(id='uncontrolled-tab-example-tabpane-rounds')
@@ -367,4 +376,3 @@ def parse_site(soup, url, name, no_event_info=False,
     if do_fleets:
         fleets = soup.find(id='uncontrolled-tab-example-tabpane-lists')
         get_fleet_lists(fleets, conn, ev_id)
-    

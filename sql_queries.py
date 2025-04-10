@@ -5,12 +5,14 @@ Created on Wed Apr  9 10:23:27 2025
 @author: alexe
 """
 
-get_event_by_url = """
-SELECT id FROM Events WHERE url = ?
+get_event_from_url = "SELECT id FROM Events WHERE url = ?"
+
+get_fleet_from_event_player = """
+SELECT id FROM Fleets WHERE event_id = ? AND player = ?
 """
 
 get_faction_from_name = """
-SELECT id FROM Factions 
+SELECT id FROM Factions
 WHERE LOWER(name) = ? OR LOWER(alias) = ?
 """
 
@@ -96,4 +98,9 @@ get_squadron_from_name_faction_cost = """
 SELECT n.squadron_id FROM SquadronNames AS n
 LEFT JOIN Squadrons AS s ON n.squadron_id = s.id
 WHERE LOWER(n.name) = ? AND s.faction_id = ? AND s.cost = ?
+"""
+
+get_squadron_from_faction_cost = """
+SELECT id FROM Squadrons
+WHERE faction_id = ? AND cost = ?
 """
