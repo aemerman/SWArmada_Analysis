@@ -104,3 +104,29 @@ get_squadron_from_faction_cost = """
 SELECT id FROM Squadrons
 WHERE faction_id = ? AND cost = ?
 """
+
+get_fleet_list = """
+SELECT fl.id AS fleet_id,
+    un.name AS name
+FROM Fleets_Upgrades AS fu
+INNER JOIN UpgradeNames AS un
+    ON fu.upgrade_id = un.upgrade_id
+    AND un.name IN (SELECT MIN(name) FROM UpgradeNames GROUP BY upgrade_id)
+LEFT JOIN Fleets_Ships as fs ON fs.id = fu.fleet_ship_id
+LEFT JOIN Fleets as fl ON fl.id = fs.fleet_id
+WHERE fl.id = ?
+UNION
+SELECT fs.fleet_id AS fleet_id,
+    sn.name AS name
+FROM Fleets_Ships AS fs
+INNER JOIN ShipNames AS sn ON fs.ship_id = sn.ship_id
+    AND sn.name IN (SELECT MAX(name) FROM ShipNames GROUP BY ship_id)
+WHERE fs.fleet_id = ?
+UNION
+SELECT fq.fleet_id AS fleet_id,
+    qn.name AS name
+FROM Fleets_Squadrons AS fq
+INNER JOIN SquadronNames AS qn ON fq.squadron_id = qn.squadron_id
+    AND qn.name IN (SELECT MAX(name) FROM SquadronNames GROUP BY squadron_id)
+WHERE fq.fleet_id = ?
+"""
