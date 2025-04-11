@@ -257,7 +257,7 @@ def get_fleet_lists(fleets, conn, ev_id):
         INSERT INTO Fleets_Ships (fleet_id, ship_id) VALUES (?, ?)
         """
         insert_upgrades_str = """
-        INSERT INTO Fleets_Upgrades (fleet_id, upgrade_id, fleet_ship_id)
+        INSERT INTO Fleets_Upgrades (upgrade_id, fleet_ship_id)
         VALUES (?, ?, ?)
         """
         insert_squadrons_str = """
@@ -286,7 +286,7 @@ def get_fleet_lists(fleets, conn, ev_id):
                 continue
 
             for upgrade in ship['upgrades']:
-                upgrade_values = (fleet_id, upgrade['id'], fleet_ship_id)
+                upgrade_values = (upgrade['id'], fleet_ship_id)
                 cursor.execute(insert_upgrades_str, upgrade_values)
 
         for squad in fleet['squadrons']:
