@@ -1,0 +1,108 @@
+id,event_id,name,faction,num_fleets_containing,avg_squadrons_cost,avg_num_squadrons,avg_bid
+1,1.0,Biggs Darklighter - X-Wing Squadron,rebel,2,119.0,7.0,2.0
+2,1.0,Corran Horn - E-Wing Squadron,rebel,3,117.0,6.666666666666667,5.666666666666667
+3,,Dagger Squadron - B-Wing Squadron,rebel,0,,,
+4,1.0,Dash Rendar - Outrider,rebel,3,110.0,6.333333333333333,2.6666666666666665
+5,1.0,Dutch Vander - Y-Wing Squadron,rebel,2,134.0,8.0,0.0
+6,1.0,Fenn Rau - Mandalorian Gauntlet Fighter,rebel,2,119.0,7.0,2.0
+7,1.0,Gold Squadron - Y-Wing Squadron,rebel,11,119.72727272727273,7.2727272727272725,3.5454545454545454
+8,1.0,Green Squadron - A-Wing Squadron,rebel,2,81.5,5.0,3.5
+9,,Han Solo - Millennium Falcon,rebel,0,,,
+10,1.0,Hera Syndulla - Ghost,rebel,1,115.0,6.0,1.0
+11,1.0,Hera Syndulla - X-Wing Squadron,rebel,3,111.0,6.333333333333333,1.6666666666666667
+12,1.0,Jan Ors - Moldy Crow,rebel,7,114.71428571428571,6.857142857142857,3.857142857142857
+13,,Kanan Jarrus - HWK-290,rebel,0,,,
+14,1.0,Ketsu Onyo - Shadow Caster,rebel,11,108.0909090909091,6.363636363636363,1.1818181818181819
+15,1.0,Keyan Farlander - B-Wing Squadron,rebel,1,115.0,7.0,0.0
+16,1.0,Lando Calrissian,rebel,16,115.4375,6.75,4.0625
+17,,Lietenant Blount - Z-95 Headhunter Squadron,rebel,0,,,
+18,1.0,Luke Skywalker - X-Wing Squadron,rebel,1,77.0,5.0,4.0
+19,1.0,Malee Hurra - Scurrg H-6 Bomber,rebel,1,134.0,8.0,8.0
+20,1.0,Mart Mattin - Sato's Hammer,rebel,2,120.0,6.5,1.5
+21,1.0,Norra Wexley - Y-Wing Squadron,rebel,2,93.5,6.5,2.0
+22,,Nym - Havoc,rebel,0,,,
+23,1.0,Rogue Squadron - X-Wing Squadron,rebel,9,125.33333333333333,7.444444444444445,3.5555555555555554
+24,1.0,Shara Bey - A-Wing Squadron,rebel,22,83.04545454545455,5.2727272727272725,4.7272727272727275
+25,1.0,Ten Numb - B-Wing Squadron,rebel,1,115.0,7.0,0.0
+26,1.0,Tycho Celchu - A-Wing Squadron,rebel,29,88.51724137931035,5.655172413793103,3.5172413793103448
+27,1.0,Wedge Antilles - X-Wing Squadron,rebel,2,133.5,8.0,0.0
+28,1.0,A-Wing Squadron,rebel,11,82.9090909090909,5.545454545454546,4.7272727272727275
+29,1.0,B-Wing Squadron,rebel,3,112.66666666666667,7.666666666666667,4.333333333333333
+30,1.0,E-Wing Squadron,rebel,1,115.0,7.0,0.0
+31,,HWK-290,rebel,0,,,
+32,1.0,Lancer-class Pursuit Craft,rebel,3,108.66666666666667,6.333333333333333,1.6666666666666667
+33,,Scurrg H-6 Bomber,rebel,0,,,
+34,1.0,VCX-100 Freighter,rebel,5,118.8,7.2,9.4
+35,1.0,X-Wing Squadron,rebel,2,119.0,7.0,2.0
+36,1.0,Y-Wing Squadron,rebel,3,99.66666666666667,6.666666666666667,3.6666666666666665
+37,1.0,YT-1300,rebel,6,85.83333333333333,5.333333333333333,3.1666666666666665
+38,1.0,YT-2400,rebel,16,115.9375,6.875,4.5625
+39,1.0,Z-95 Headhunter Squadron,rebel,7,68.42857142857143,6.0,1.7142857142857142
+40,1.0,Black Squadron - TIE Fighter Squadron,empire,7,103.28571428571429,6.285714285714286,3.7142857142857144
+41,1.0,Boba Fett - Slave I,empire,2,88.0,4.0,0.5
+42,1.0,Bossk - Hound's Tooth,empire,2,111.0,6.0,3.5
+43,1.0,Captain Jonus - TIE Bomber Squadron,empire,6,73.5,5.0,2.1666666666666665
+44,1.0,Ciena Ree - TIE Interceptor Squadron,empire,4,71.25,4.5,5.25
+45,1.0,Colonel Jendon - Lambda-class Shuttle,empire,20,116.1,6.8,2.05
+46,1.0,Darth Vader [TIE/A],empire,1,84.0,4.0,2.0
+47,1.0,Darth Vader [TIE/D],empire,25,111.04,6.36,2.6
+48,,Dengar - Punishing One,empire,0,,,
+49,1.0,Gamma Squadron - TIE Bomber Squadron,empire,4,91.0,6.0,3.0
+50,,Gar Saxon - Mandalorian Gauntlet Fighter,empire,0,,,
+51,1.0,Hondo Ohnaka - Slave I,empire,5,107.8,6.0,5.6
+52,1.0,Howlrunner - TIE Fighter Squadron,empire,2,55.0,4.5,2.5
+53,1.0,IG-88 - IG-2000,empire,2,110.0,6.0,4.0
+54,1.0,IG-88B - IG-2000B,empire,2,79.0,4.0,8.5
+55,1.0,Maarek Stele - TIE Defender Squadron,empire,22,110.45454545454545,6.545454545454546,2.090909090909091
+56,,Major Rhymer - TIE Bomber Squadron,empire,0,,,
+57,1.0,Mauler Mithel - TIE Fighter Squadron,empire,15,100.2,6.4,2.4
+58,1.0,Moralo Eval - YV-666,empire,1,107.0,6.0,13.0
+59,1.0,Morna Kee - VT-49 Decimator,empire,1,84.0,4.0,2.0
+60,1.0,Saber Squadron - TIE Interceptor Squadron,empire,12,123.5,7.5,1.4166666666666667
+61,1.0,Soontir Fel - TIE Interceptor Squadron,empire,2,87.0,5.5,1.5
+62,1.0,Tel Trevura - JumpMaster 5000,empire,10,101.2,5.6,5.9
+63,1.0,Tempest Squadron - TIE Advanced Squadron,empire,1,109.0,6.0,1.0
+64,1.0,Valen Rudor - TIE Fighter Squadron,empire,9,91.77777777777777,5.777777777777778,3.5555555555555554
+65,,Vult Skerris - TIE Interceptor Squadron,empire,0,,,
+66,1.0,Whisper - TIE Phantom Squadron,empire,2,83.0,5.0,11.5
+67,1.0,Zertik Strom - TIE Advanced Squadron,empire,2,81.5,4.5,0.5
+68,1.0,Aggressor Assault Fighter,empire,1,116.0,6.0,0.0
+69,1.0,Firespray-31,empire,3,126.33333333333333,6.666666666666667,1.6666666666666667
+70,1.0,JumpMaster 5000,empire,1,127.0,12.0,2.0
+71,1.0,Lambda-class Shuttle,empire,3,117.66666666666667,8.333333333333334,5.0
+72,1.0,Mandalorian Gauntlet Fighter,empire,1,133.0,8.0,7.0
+73,1.0,TIE Advanced Squadron,empire,4,110.75,7.0,4.0
+74,1.0,TIE Bomber Squadron,empire,6,99.83333333333333,7.5,2.3333333333333335
+75,1.0,TIE Defender Squadron,empire,7,116.42857142857143,6.428571428571429,3.7142857142857144
+76,1.0,TIE Fighter Squadron,empire,10,73.1,5.9,2.8
+77,1.0,TIE Interceptor Squadron,empire,9,103.55555555555556,7.444444444444445,0.8888888888888888
+78,,TIE Phantom Squadron,empire,0,,,
+79,,VT-49 Decimator,empire,0,,,
+80,,YV-666,empire,0,,,
+81,,Baktoid Prototypes - Hyena-class Droid Bomber Squadron,separatist,0,,,
+82,,DBS-404 - Hyena-class Droid Bomber Squadron,separatist,0,,,
+83,1.0,DFS-311 - Vulture-class Droid Fighter Squadron,separatist,5,115.2,10.0,2.2
+84,1.0,DIS-T81 - Droid Tri-Fighter Squadron,separatist,6,91.5,6.833333333333333,4.166666666666667
+85,1.0,General Grievous - Belbullab-22 Starfighter Squadron,separatist,1,73.0,4.0,0.0
+86,1.0,Haor-Chall Prototypes - Vulture-class Droid Fighter Squadron,separatist,1,73.0,4.0,0.0
+87,1.0,Jango Fett - Modified Firespray-31,separatist,7,99.28571428571429,7.857142857142857,5.428571428571429
+88,1.0,Phlac-Arphocc Prototypes - Droid Tri-Fighter Squadron,separatist,6,97.66666666666667,7.0,2.3333333333333335
+89,1.0,Wat Tambor - Belbullab-22 Starfighter Squadron,separatist,7,96.0,7.714285714285714,4.428571428571429
+90,,Belbullab-22 Starfighter Squadron,separatist,0,,,
+91,1.0,Droid Tri-Fighter Squadron,separatist,4,74.5,6.5,2.75
+92,1.0,Hyena-class Droid Bomber Squadron,separatist,5,123.0,11.0,4.2
+93,1.0,Vulture-class Fighter Squadron,separatist,20,74.8,7.1,4.55
+94,1.0,Ahsoka Tano - Delta-7 Aethersprite Squadron,republic,9,112.55555555555556,6.777777777777778,1.4444444444444444
+95,,Anakin Skywalker - BTL-B Y-wing Squadron,republic,0,,,
+96,1.0,Anakin Skywalker - Delta-7 Aethersprite Squadron,republic,13,113.23076923076923,7.0,2.0
+97,1.0,Axe - V-19 Torrent Squadron,republic,12,111.58333333333333,6.916666666666667,2.1666666666666665
+98,1.0,Kickback - V-19 Torrent Squadron,republic,5,98.8,5.8,0.6
+99,1.0,Kit Fisto - Delta-7 Aethersprite Squadron,republic,2,124.0,8.5,4.0
+100,,Luminara Unduli - Delta-7 Aethersprite Squadron,republic,0,,,
+101,1.0,Matchstick - BTL-B Y-wing Squadron,republic,1,122.0,8.0,2.0
+102,,Odd Ball - ARC-170 Starfighter Squadron,republic,0,,,
+103,1.0,Plo Koon - Delta-7 Aethersprite Squadron,republic,2,108.5,6.5,2.0
+104,1.0,ARC-170 Starfighter Squadron,republic,7,119.14285714285714,7.142857142857143,1.5714285714285714
+105,1.0,BTL-B Y-wing Squadron,republic,8,125.75,8.25,3.5
+106,,Delta-7 Aethersprite Squadron,republic,0,,,
+107,1.0,V-19 Torrent Squadron,republic,4,112.75,7.5,1.25

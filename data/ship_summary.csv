@@ -1,0 +1,67 @@
+id,event_id,name,faction,num_fleets_containing,avg_num_upgrades,avg_cost_upgrades,avg_squadrons_cost,avg_bid
+1,,Assault Frigate Mk2 A,rebel,0,,,,
+2,1.0,Assault Frigate Mk2 B,rebel,9,3.888888888888889,23.88888888888889,102.11111111111111,2.111111111111111
+3,1.0,CR90 Corvette A,rebel,22,2.1818181818181817,11.515151515151516,76.60606060606061,2.393939393939394
+4,1.0,CR90 Corvette B,rebel,10,2.3333333333333335,11.333333333333334,69.83333333333333,6.083333333333333
+5,1.0,GR-75 Combat Retrofits,rebel,1,2.0,4.5,42.0,0.0
+6,1.0,GR-75 Medium Transports,rebel,41,1.9473684210526316,7.017543859649122,83.12280701754386,4.421052631578948
+7,1.0,Hammerhead Scout Corvette,rebel,1,5.0,27.5,0.0,5.0
+8,1.0,Hammerhead Torpedo Corvette,rebel,9,3.125,11.375,61.666666666666664,5.777777777777778
+9,1.0,MC30c Scout Frigate,rebel,9,4.583333333333333,28.833333333333332,63.25,1.0
+10,1.0,MC30c Torpedo Frigate,rebel,9,5.166666666666667,30.75,78.75,2.5
+11,1.0,MC75 Armored Cruiser,rebel,6,6.571428571428571,33.142857142857146,84.71428571428571,8.571428571428571
+12,1.0,MC75 Ordnance Cruiser,rebel,8,5.875,32.625,71.375,4.0
+13,1.0,MC80 Assault Cruiser,rebel,3,5.333333333333333,28.333333333333332,65.33333333333333,0.3333333333333333
+14,1.0,MC80 Battle Cruiser,rebel,2,7.0,42.333333333333336,44.333333333333336,13.666666666666666
+15,1.0,MC80 Command Cruiser,rebel,3,6.75,37.75,19.5,5.5
+16,1.0,MC80 Star Cruiser,rebel,4,6.5,38.25,45.25,3.5
+17,1.0,Pelta Assault Ship,rebel,4,3.0,14.0,59.5,5.5
+18,1.0,Pelta Command Ship,rebel,2,3.0,12.5,78.0,2.0
+19,1.0,Nebulon-B Escort Frigate,rebel,2,4.5,16.0,124.0,1.5
+20,1.0,Nebulon-B Support Refit,rebel,2,2.0,10.4,44.8,1.0
+21,1.0,Providence-class Carrier (reb),rebel,6,6.666666666666667,34.5,103.16666666666667,1.6666666666666667
+22,1.0,Starhawk-class Battleship Mark I,rebel,4,7.0,40.75,105.25,9.25
+23,,Starhawk-class Battleship Mark II,rebel,0,,,,
+24,1.0,Arquitens-class Command Cruiser,empire,3,3.25,15.0,97.25,4.0
+25,1.0,Arquitens-class Light Cruiser,empire,5,1.75,9.25,77.5,2.375
+26,,Executor I-class Star Dreadnought,empire,0,,,,
+27,,Executor II-class Star Dreadnought,empire,0,,,,
+28,1.0,Gladiator I-Class Star Destroyer,empire,13,4.214285714285714,23.357142857142858,82.0,2.4285714285714284
+29,1.0,Gladiator II-Class Star Destroyer,empire,3,4.333333333333333,23.333333333333332,98.66666666666667,4.0
+30,1.0,Gozanti-class Assault Carriers,empire,2,1.0,2.5,51.0,8.0
+31,1.0,Gozanti-class Cruisers (imp),empire,43,1.8928571428571428,5.642857142857143,74.50877192982456,3.8947368421052633
+32,1.0,Imperial I-Class Star Destroyer,empire,3,6.0,27.0,99.66666666666667,5.666666666666667
+33,1.0,Imperial II-Class Star Destroyer,empire,25,5.533333333333333,30.0,64.23333333333333,3.7
+34,1.0,Imperial Star Destroyer Cymoon 1 Refit,empire,9,4.5,23.5,61.0,4.2
+35,1.0,Imperial Star Destroyer Kuat Refit,empire,3,5.333333333333333,28.0,43.0,3.3333333333333335
+36,,Interdictor-class Combat Refit,empire,0,,,,
+37,1.0,Interdictor-class Suppression Refit,empire,5,6.0,25.166666666666668,90.33333333333333,6.0
+38,1.0,Onager-class Star Destroyer,empire,2,6.0,27.5,68.5,0.5
+39,1.0,Onager-class Testbed,empire,2,4.5,24.5,66.5,5.0
+40,1.0,Quasar Fire I-class Cruiser-Carrier,empire,9,3.7777777777777777,18.444444444444443,114.0,1.4444444444444444
+41,,Quasar Fire II-class Cruiser-Carrier,empire,0,,,,
+42,1.0,Raider I-Class Corvette,empire,7,2.6,9.4,106.0,3.5
+43,1.0,Raider II-Class Corvette,empire,3,2.6,14.0,28.4,9.4
+44,1.0,Star Dreadnought Assault Prototype,empire,2,10.0,56.5,8.0,5.5
+45,1.0,Star Dreadnought Command Prototype,empire,1,6.0,29.0,125.0,3.0
+46,,Venator II-class Star Destroyer (imp),empire,0,,,,
+47,1.0,Victory I-Class Star Destroyer (imp),empire,3,4.333333333333333,21.333333333333332,47.0,3.3333333333333335
+48,1.0,Victory II-Class Star Destroyer,empire,6,4.875,23.5,78.5,2.75
+49,1.0,Gozanti-class Cruisers (cis),separatist,16,1.2666666666666666,5.4,70.0,2.8636363636363638
+50,1.0,Hardcell-class Battle Refit,separatist,10,2.066666666666667,10.6,45.125,3.9375
+51,1.0,Hardcell-class Transport,separatist,12,3.3846153846153846,14.153846153846153,63.53846153846154,4.538461538461538
+52,1.0,Munificent-class Comms Frigate,separatist,2,4.5,17.5,52.0,4.5
+53,1.0,Munificent-class Star Frigate,separatist,4,4.666666666666667,24.833333333333332,37.5,3.1666666666666665
+54,1.0,Providence-class Carrier (cis),separatist,14,7.928571428571429,42.142857142857146,53.357142857142854,5.285714285714286
+55,1.0,Providence-class Dreadnought,separatist,5,7.8,38.8,79.2,2.6
+56,1.0,Recusant Light Destroyer,separatist,19,5.136363636363637,27.681818181818183,37.31818181818182,4.636363636363637
+57,1.0,Recusant Support Destroyer,separatist,2,5.666666666666667,24.333333333333332,132.33333333333334,4.0
+58,1.0,Acclamator I-class Assault Ship,republic,3,4.0,16.666666666666668,79.66666666666667,5.666666666666667
+59,1.0,Acclamator II-class Assault Ship,republic,5,5.4,25.4,82.0,-0.8
+60,1.0,Consular-class Armed Cruiser,republic,10,1.8823529411764706,6.294117647058823,63.88235294117647,7.647058823529412
+61,,Consular-class Charger C70,republic,0,,,,
+62,1.0,Pelta-class Medical Frigate,republic,4,3.2,15.4,128.4,5.2
+63,1.0,Pelta-class Transport Frigate,republic,7,2.6666666666666665,11.5,74.33333333333333,2.9166666666666665
+64,1.0,Venator I-class Star Destroyer,republic,2,6.0,31.0,61.0,2.0
+65,1.0,Venator II-class Star Destroyer (gar),republic,13,6.0,27.428571428571427,95.57142857142857,1.7857142857142858
+66,1.0,Victory I-Class Star Destroyer (gar),republic,1,6.0,30.333333333333332,0.0,5.0
