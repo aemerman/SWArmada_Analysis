@@ -333,8 +333,7 @@ def get_scores(rounds, conn, ev_id):
     cursor.executemany(insert_str, insert_values)
     conn.commit()
 
-def parse_site(soup, url, name, no_event_info=False,
-                  do_scores=True, do_fleets=True):
+def parse_site(soup, url, name, do_scores=True, do_fleets=True):
     sql_path = 'data/armada_events.sql'
     conn = sqlite3.connect(sql_path)
     cursor = conn.cursor()
