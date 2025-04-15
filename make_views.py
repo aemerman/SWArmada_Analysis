@@ -44,15 +44,56 @@ GROUP BY f.id
 
 get_commander = """
 SELECT f.id AS fleet_id,
-    un.name AS commander
+    un.name AS commander,
+    sn.name AS flagship
 from Fleets_Upgrades AS fu
 INNER JOIN Upgrades AS u ON fu.upgrade_id = u.id
 INNER JOIN UpgradeNames AS un
     ON fu.upgrade_id = un.upgrade_id
     AND un.name IN (SELECT MIN(name) FROM UpgradeNames GROUP BY upgrade_id)
 INNER JOIN Fleets_Ships AS fs ON fu.fleet_ship_id = fs.id
+INNER JOIN ShipNames AS sn
+    ON fs.ship_id = sn.ship_id
+    AND sn.name IN (SELECT MAX(name) FROM ShipNames GROUP BY ship_id)
 INNER JOIN Fleets AS f ON f.id = fs.fleet_id
 WHERE u.slot_id = 1
+"""
+
+# Getting player stats is a multi-step process. First, use a CTE to calculate
+# margin of victory (MoV) and aggregate tournament points (TP) across the
+# event. Then calculate variance and strength of schedule (SoS) for the event.
+get_player_event = """
+player_agg AS (
+    SELECT sc1.player AS player,
+        sc1.event_id AS event_id,
+        SUM(CASE
+                WHEN sc2.player IS NULL THEN 140
+                WHEN sc1.points > sc2.points THEN sc1.points - sc2.points
+                ELSE 0
+            END) AS mov,
+        SUM(sc1.tournament_points) AS tp,
+        AVG(sc1.tournament_points) AS avg_tp
+    FROM Scores AS sc1
+    LEFT JOIN Scores AS sc2 ON sc1.opponent = sc2.player
+    GROUP BY sc1.player, sc1.event_id
+    ),
+pe AS (
+   SELECT pl.player AS player,
+        pl.event_id AS event_id,
+        pl.mov AS mov,
+        pl.tp AS tp,
+        pl.avg_tp AS avg_tp,
+        SUM((sc.tournament_points - pl.avg_tp)
+            *(sc.tournament_points - pl.avg_tp))
+            / (COUNT(sc.tournament_points)-1) AS var_tp,
+        AVG(opp.avg_tp) AS sos
+    FROM player_agg AS pl
+    INNER JOIN Scores AS sc ON pl.player = sc.player
+        AND pl.event_id = sc.event_id
+    INNER JOIN player_agg AS opp ON sc.opponent = opp.player
+        AND sc.event_id = opp.event_id
+    GROUP BY pl.player, pl.event_id
+    )
 """
 
 # For fleet-level analysis. Popularity of factions and commanders, size of bids
@@ -60,15 +101,17 @@ WHERE u.slot_id = 1
 view_fleet_summary = f"""
 CREATE VIEW IF NOT EXISTS Fleet_Summary AS
 WITH co AS ({get_commander}),
-    fs AS ({get_ships_summary}),
-    fq AS ({get_squadrons_summary}),
-    fu AS ({get_upgrades_summary})
+fs AS ({get_ships_summary}),
+fq AS ({get_squadrons_summary}),
+fu AS ({get_upgrades_summary}),
+{get_player_event}
 
 SELECT
     fl.id AS id,
     fl.event_id AS event_id,
     fn.name AS faction,
     co.commander AS commander,
+    co.flagship AS flagship,
     fs.ships_cost AS ships_base_cost,
     fs.ships_cost + fu.upgrades_cost AS ships_total_cost,
     fs.num_ships AS num_ships,
@@ -82,13 +125,19 @@ SELECT
     fs.ships_cost + COALESCE(fq.squadrons_cost, 0)
         + COALESCE(fu.upgrades_cost, 0) AS total_cost,
     400 - (fs.ships_cost + COALESCE(fq.squadrons_cost, 0)
-           + COALESCE(fu.upgrades_cost, 0)) AS bid
+           + COALESCE(fu.upgrades_cost, 0)) AS bid,
+    pe.mov AS mov,
+    pe.tp AS tp,
+    ROUND(pe.sos, 2) AS sos,
+    ROUND(pe.avg_tp, 2) AS avg_tp,
+    ROUND(pe.var_tp, 3) AS var_tp
 FROM Fleets AS fl
 INNER JOIN Factions AS fn ON fl.faction_id = fn.id
 LEFT JOIN co ON co.fleet_id = fl.id
 LEFT JOIN fs ON fs.fleet_id = fl.id
 LEFT JOIN fq ON fq.fleet_id = fl.id
 LEFT JOIN fu ON fu.fleet_id = fl.id
+LEFT JOIN pe ON pe.player = fl.player AND pe.event_id = fl.event_id
 """
 
 # For ship-to-ship comparisons. Popularity of ships, average # and cost of
@@ -162,9 +211,9 @@ if __name__ == "__main__":
 
     df_fleet = pd.read_sql_query('SELECT * FROM Fleet_Summary', conn)
     df_fleet.to_csv('data/fleet_summary.csv', index=False)
-    df_ship = pd.read_sql_query('SELECT * FROM Ship_Summary', conn)
-    df_ship.to_csv('data/ship_summary.csv', index=False)
-    df_squad = pd.read_sql_query('SELECT * FROM Squadron_Summary', conn)
-    df_squad.to_csv('data/squadron_summary.csv', index=False)
+    # df_ship = pd.read_sql_query('SELECT * FROM Ship_Summary', conn)
+    # df_ship.to_csv('data/ship_summary.csv', index=False)
+    # df_squad = pd.read_sql_query('SELECT * FROM Squadron_Summary', conn)
+    # df_squad.to_csv('data/squadron_summary.csv', index=False)
 
     #conn.close()

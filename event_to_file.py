@@ -334,8 +334,10 @@ def get_scores(rounds, conn, ev_id):
             else:
                 continue
 
-            insert_values += [(ev_id, ii+1, playerA, ptsA, tpA, playerB)]
-            insert_values += [(ev_id, ii+1, playerB, ptsB, tpB, playerA)]
+            if playerA:
+                insert_values += [(ev_id, ii+1, playerA, ptsA, tpA, playerB)]
+            if playerB:
+                insert_values += [(ev_id, ii+1, playerB, ptsB, tpB, playerA)]
 
     cursor.executemany(insert_str, insert_values)
     conn.commit()
@@ -346,11 +348,10 @@ def parse_site(soup, url, name, do_scores=True, do_fleets=True):
     cursor = conn.cursor()
 
     # Check if event already in DB. If not, add to Events table
-    res = get_one_from_sql(cursor, sql_queries.get_event_from_url, (url,))
-    try:
-        ev_id = res
+    ev_id = get_one_from_sql(cursor, sql_queries.get_event_from_url, (url,))
+    if ev_id:
         print(f'Found matching event with ID: {ev_id}')
-    except TypeError:
+    else:
         select_str = 'div.pt-3.small.row div.col:has(> i.bi.bi-calendar3)'
         ev_date = soup.select_one(select_str).text
         ev_date = ev_date.replace(',','').split()[1:]
