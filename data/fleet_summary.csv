@@ -1,147 +1,147 @@
-id,event_id,faction,commander,ships_base_cost,ships_total_cost,num_ships,num_huge,num_large,num_medium,num_small,squadrons_cost,num_squadrons,num_uniq_squadrons,total_cost,bid
-1,1,rebel,Admiral Raddus,228,299,4,0,1,1,2,98,6,3,397,3
-2,1,rebel,Admiral Raddus,174,257,3,0,1,0,2,134,9,2,391,9
-3,1,separatist,Admiral Trench,187,271,3,0,1,0,2,129,12,2,400,0
-4,1,rebel,Kyrsta Agate,202,282,3,0,1,0,2,109,6,3,391,9
-5,1,rebel,Admiral Raddus,269,389,5,0,2,0,3,0,0,0,389,11
-6,1,rebel,Admiral Ackbar,245,399,5,0,0,0,5,0,0,0,399,1
-7,1,separatist,Mar Tuuk,235,342,4,0,2,0,2,56,7,0,398,2
-8,1,separatist,TF-1726,272,396,3,0,3,0,0,0,0,0,396,4
-9,1,rebel,Admiral Ackbar,307,400,7,0,0,0,7,0,0,0,400,0
-10,1,empire,Moff Jerjerrod,286,389,4,0,2,0,2,0,0,0,389,11
-11,1,empire,Admiral Ozzel,203,280,3,0,0,2,1,107,6,4,387,13
-12,1,empire,Moff Jerjerrod,199,280,3,0,1,0,2,120,8,5,400,0
-13,1,republic,Admiral Yularen,188,257,4,0,0,0,4,134,8,3,391,9
-14,1,empire,Grand Admiral Thrawn,176,260,2,0,1,0,1,134,10,4,394,6
-15,1,separatist,Mar Tuuk,234,350,3,0,2,0,1,44,4,0,394,6
-16,1,rebel,Admiral Raddus,255,351,4,0,2,0,2,33,2,2,384,16
-17,1,empire,Admiral Piett,214,292,4,0,1,0,3,107,6,6,399,1
-18,1,republic,Bail Organa,186,272,3,0,1,0,2,126,9,3,398,2
-19,1,empire,Admiral Sloane,199,262,5,0,0,1,4,134,8,5,396,4
-20,1,rebel,General Rieekan,170,266,4,0,0,1,3,134,8,7,400,0
-21,1,empire,General Romodi,242,334,4,0,1,1,2,56,6,1,390,10
-22,1,empire,Moff Jerjerrod,199,281,3,0,1,0,2,118,7,5,399,1
-23,1,empire,Moff Jerjerrod,296,384,3,1,0,0,2,16,1,1,400,0
-24,1,rebel,Leia Organa,186,285,4,0,0,1,3,115,7,3,400,0
-25,1,rebel,Admiral Ackbar,177,281,4,0,0,1,3,119,7,4,400,0
-26,1,empire,Admiral Ozzel,182,285,4,0,0,1,3,115,8,5,400,0
-27,1,empire,Admiral Sloane,233,281,5,0,0,1,4,119,7,4,400,0
-28,1,empire,Admiral Sloane,197,271,3,0,1,1,1,129,8,5,400,0
-29,1,separatist,Mar Tuuk,296,398,4,0,3,0,1,0,0,0,398,2
-30,1,rebel,Admiral Raddus,170,258,4,0,1,0,3,134,8,3,392,8
-31,1,rebel,Admiral Ackbar,152,255,4,0,0,1,3,134,8,4,389,11
-32,1,empire,Admiral Sloane,189,271,3,0,1,1,1,129,8,6,400,0
-33,1,republic,Bail Organa,174,261,3,0,1,0,2,131,9,4,392,8
-34,1,separatist,Admiral Trench,180,260,2,0,2,0,0,134,10,4,394,6
-35,1,rebel,Admiral Ackbar,240,360,4,0,2,0,2,39,3,0,399,1
-36,1,rebel,Kyrsta Agate,263,366,6,0,1,0,5,33,2,2,399,1
-37,1,separatist,Admiral Trench,206,309,3,0,2,0,1,91,6,4,400,0
-38,1,empire,Admiral Motti,250,310,3,0,0,3,0,88,6,4,398,2
-39,1,republic,Bail Organa,208,292,3,0,1,1,1,110,6,4,402,-2
-40,1,empire,General Romodi,195,269,3,0,1,0,2,129,7,5,398,2
-41,1,separatist,General Grievous,173,266,3,0,1,0,2,123,11,2,389,11
-42,1,empire,Grand Admiral Thrawn,228,319,4,0,1,0,3,78,6,3,397,3
-43,1,rebel,Kyrsta Agate,165,256,3,0,1,0,2,133,8,5,389,11
-44,1,rebel,Commander Sato,182,284,3,0,1,0,2,115,6,6,399,1
-45,1,empire,Admiral Motti,271,393,4,0,1,1,2,0,0,0,393,7
-46,1,empire,Admiral Ozzel,199,278,3,0,1,0,2,121,7,4,399,1
-47,1,rebel,Kyrsta Agate,214,304,3,0,1,0,2,95,5,4,399,1
-48,1,empire,Moff Jerjerrod,286,395,4,0,2,0,2,0,0,0,395,5
-49,1,rebel,Admiral Raddus,272,391,4,0,2,0,2,0,0,0,391,9
-50,1,republic,Luminara Unduli,251,366,4,0,1,1,2,33,2,2,399,1
-51,1,empire,Moff Jerjerrod,286,395,4,0,2,0,2,0,0,0,395,5
-52,1,empire,Admiral Ozzel,188,263,3,0,1,0,2,125,6,4,388,12
-53,1,rebel,Kyrsta Agate,230,321,5,0,1,0,4,79,4,4,400,0
-54,1,empire,Grand Moff Tarkin,208,289,3,0,1,0,2,102,6,5,391,9
-55,1,rebel,Admiral Ackbar,200,337,4,0,0,0,4,61,6,2,398,2
-56,1,empire,Darth Vader,239,335,4,0,1,0,3,63,5,3,398,2
-57,1,rebel,Kyrsta Agate,201,272,4,0,1,0,3,128,7,5,400,0
-58,1,rebel,Kyrsta Agate,176,258,3,0,1,0,2,130,8,2,388,12
-59,1,separatist,Kraken,279,367,5,0,1,0,4,32,4,0,399,1
-60,1,separatist,Mar Tuuk,243,361,3,0,1,2,0,32,4,0,393,7
-61,1,empire,Moff Jerjerrod,240,314,2,0,2,0,0,84,4,4,398,2
-62,1,empire,Admiral Sloane,197,271,3,0,1,1,1,128,7,5,399,1
-63,1,separatist,TF-1726,253,336,5,0,1,1,3,56,4,2,392,8
-64,1,rebel,Admiral Raddus,179,291,4,0,1,0,3,101,6,4,392,8
-65,1,empire,Admiral Motti,229,323,3,0,1,1,1,77,4,4,400,0
-66,1,rebel,Kyrsta Agate,201,278,4,0,1,0,3,121,7,5,399,1
-67,1,separatist,Mar Tuuk,278,398,4,0,1,2,1,0,0,0,398,2
-68,1,separatist,General Grievous,194,287,3,0,1,1,1,113,10,2,400,0
-69,1,empire,Admiral Sloane,200,298,5,0,0,1,4,95,6,4,393,7
-70,1,rebel,Kyrsta Agate,214,298,3,0,1,0,2,87,6,2,385,15
-71,1,empire,Moff Jerjerrod,220,272,1,1,0,0,0,125,6,4,397,3
-72,1,empire,Admiral Motti,289,393,4,0,2,0,2,0,0,0,393,7
-73,1,separatist,General Grievous,206,307,3,0,2,0,1,87,8,2,394,6
-74,1,republic,Luminara Unduli,190,271,3,0,1,0,2,128,8,4,399,1
-75,1,republic,Luminara Unduli,261,352,4,0,1,1,2,47,2,2,399,1
-76,1,rebel,General Madine,227,351,5,0,0,0,5,49,4,1,400,0
-77,1,separatist,TF-1726,234,352,3,0,2,0,1,48,6,0,400,0
-78,1,separatist,Mar Tuuk,197,299,4,0,1,0,3,100,10,1,399,1
-79,1,rebel,General Cracken,162,265,4,0,0,0,4,127,7,4,392,8
-80,1,rebel,Admiral Raddus,234,338,5,0,1,0,4,55,4,2,393,7
-81,1,rebel,Admiral Ackbar,203,320,4,0,0,1,3,78,6,3,398,2
-82,1,empire,Admiral Screed,287,396,5,0,1,0,4,0,0,0,396,4
-83,1,separatist,Admiral Trench,258,368,4,0,2,0,2,32,4,0,400,0
-84,1,republic,Admiral Tarkin,256,395,4,0,0,3,1,0,0,0,395,5
-85,1,empire,Admiral Piett,223,290,3,0,1,1,1,109,6,6,399,1
-86,1,empire,Admiral Motti,288,394,3,0,2,0,1,0,0,0,394,6
-87,1,rebel,Admiral Raddus,175,266,4,0,1,0,3,134,8,4,400,0
-88,1,republic,Admiral Yularen,194,281,3,0,1,0,2,119,8,2,400,0
-89,1,rebel,General Rieekan,193,302,4,0,1,0,3,98,6,6,400,0
-90,1,rebel,General Draven,170,264,3,0,1,0,2,133,8,5,397,3
-91,1,empire,Darth Vader,253,350,3,0,2,0,1,47,4,2,397,3
-92,1,rebel,Admiral Ackbar,203,319,4,0,0,1,3,81,6,4,400,0
-93,1,rebel,Admiral Ackbar,216,333,4,0,0,0,4,67,4,2,400,0
-94,1,rebel,Admiral Ackbar,220,395,5,0,0,0,5,0,0,0,395,5
-95,1,empire,General Romodi,233,311,3,0,1,1,1,89,4,4,400,0
-96,1,separatist,Kraken,250,367,5,0,1,0,4,32,4,0,399,1
-97,1,rebel,Kyrsta Agate,188,299,4,0,0,0,4,101,6,3,400,0
-98,1,republic,Luminara Unduli,235,308,3,0,2,0,1,89,5,3,397,3
-99,1,republic,Anakin Skywalker,323,385,8,0,0,1,7,0,0,0,385,15
-100,1,republic,Plo Koon,201,276,3,0,1,1,1,122,8,3,398,2
-101,1,empire,Admiral Ozzel,205,284,3,0,1,0,2,116,6,4,400,0
-102,1,rebel,Admiral Ackbar,246,343,5,0,0,1,4,55,4,2,398,2
-103,1,separatist,Mar Tuuk,261,351,4,0,2,0,2,42,4,1,393,7
-104,1,rebel,General Cracken,195,273,4,0,0,0,4,125,7,5,398,2
-105,1,rebel,Kyrsta Agate,174,267,4,0,1,0,3,133,8,5,400,0
-106,1,separatist,Mar Tuuk,237,339,3,0,2,0,1,57,6,0,396,4
-107,1,empire,Admiral Piett,233,318,3,0,1,1,1,74,4,4,392,8
-108,1,empire,Admiral Ozzel,200,271,4,0,1,0,3,127,12,0,398,2
-109,1,empire,General Tagge,266,383,5,0,1,0,4,16,2,0,399,1
-110,1,rebel,Admiral Ackbar,260,343,5,0,0,0,5,56,4,1,399,1
-111,1,separatist,Mar Tuuk,252,351,4,0,1,2,1,48,6,0,399,1
-112,1,separatist,General Grievous,173,268,3,0,1,0,2,129,12,2,397,3
-113,1,empire,Admiral Ozzel,178,260,5,0,0,0,5,133,8,7,393,7
-114,1,rebel,Kyrsta Agate,223,331,4,0,1,0,3,61,6,2,392,8
-115,1,rebel,Kyrsta Agate,221,345,4,0,1,0,3,55,6,1,400,0
-116,1,empire,Admiral Sloane,197,281,3,0,1,1,1,119,8,5,400,0
-117,1,republic,Admiral Yularen,186,265,3,0,1,0,2,129,8,3,394,6
-118,1,empire,Grand Moff Tarkin,272,365,4,0,1,0,3,30,2,2,395,5
-119,1,empire,Admiral Motti,263,351,3,0,2,0,1,48,4,3,399,1
-120,1,rebel,General Dodonna,278,385,5,0,2,0,3,0,0,0,385,15
-121,1,empire,Grand Admiral Thrawn,187,266,3,0,1,0,2,133,7,1,399,1
-122,1,separatist,TF-1726,287,394,4,0,2,0,2,0,0,0,394,6
-123,1,republic,Bail Organa,208,292,3,0,1,1,1,110,6,4,402,-2
-124,1,separatist,Admiral Trench,229,327,3,0,2,0,1,73,4,4,400,0
-125,1,empire,Grand Moff Tarkin,245,335,4,0,1,0,3,65,4,4,400,0
-126,1,rebel,General Rieekan,249,364,6,0,1,0,5,29,2,2,393,7
-127,1,rebel,General Dodonna,217,307,4,0,1,0,3,89,7,1,396,4
-128,1,separatist,TF-1726,233,336,5,0,1,0,4,64,8,0,400,0
-129,1,separatist,Mar Tuuk,197,315,4,0,1,0,3,84,6,3,399,1
-130,1,republic,Luminara Unduli,290,396,4,0,2,0,2,0,0,0,396,4
-131,1,empire,Admiral Piett,247,313,4,0,1,0,3,86,5,4,399,1
-132,1,rebel,Admiral Raddus,259,351,4,0,2,0,2,49,3,2,400,0
-133,1,empire,Grand Moff Tarkin,239,312,3,0,1,2,0,87,4,4,399,1
-134,1,empire,General Romodi,296,389,3,1,0,0,2,0,0,0,389,11
-135,1,rebel,Kyrsta Agate,254,358,4,0,2,0,2,42,6,0,400,0
-136,1,republic,Bail Organa,208,292,3,0,1,1,1,110,6,4,402,-2
-137,1,empire,Admiral Sloane,237,314,4,0,0,3,1,86,6,2,400,0
-138,1,empire,Grand Moff Tarkin,241,344,3,0,1,1,1,54,6,0,398,2
-139,1,separatist,Mar Tuuk,317,393,5,0,2,0,3,0,0,0,393,7
-140,1,empire,Admiral Screed,231,313,4,0,1,0,3,71,4,4,384,16
-141,1,empire,Grand Admiral Thrawn,231,315,4,0,1,0,3,85,4,3,400,0
-142,1,separatist,Mar Tuuk,209,302,4,0,1,0,3,91,6,4,393,7
-143,1,empire,Moff Jerjerrod,320,393,4,0,2,1,1,0,0,0,393,7
-144,1,rebel,Admiral Ackbar,200,294,3,0,1,1,1,105,6,3,399,1
-145,1,republic,Bail Organa,201,283,3,0,1,1,1,117,8,3,400,0
-146,1,rebel,Admiral Raddus,202,319,3,0,1,0,2,77,5,3,396,4
+id,event_id,player,faction,commander,flagship,ships_base_cost,ships_total_cost,num_ships,num_huge,num_large,num_medium,num_small,squadrons_cost,num_squadrons,num_uniq_squadrons,total_cost,bid,mov,tp,sos,avg_tp,var_tp
+1,1,Andrew Sackett,rebel,Admiral Raddus,Assault Frigate Mk2 B,228,299,4,0,1,1,2,98,6,3,397,3,5778,310,5.45,10.0,0.0
+2,1,Daniel Unzeitig,rebel,Admiral Raddus,CR90 Corvette B,174,257,3,0,1,0,2,134,9,2,391,9,2538,182,5.19,7.91,4.285
+3,1,Christopher Fritz,separatist,Admiral Trench,Recusant Support Destroyer,187,271,3,0,1,0,2,129,12,2,400,0,1336,201,5.73,7.44,1.041
+4,1,Joshua Fletcher,rebel,Kyrsta Agate,Starhawk-class Battleship Mark I,202,282,3,0,1,0,2,109,6,3,391,9,2514,152,5.02,7.6,6.347
+5,1,Patrick Doupe,rebel,Admiral Raddus,MC80 Command Cruiser,269,389,5,0,2,0,3,0,0,0,389,11,1655,189,5.36,7.0,4.0
+6,1,Jordan Shettell,rebel,Admiral Ackbar,MC30c Scout Frigate,245,399,5,0,0,0,5,0,0,0,399,1,1931,120,4.44,7.5,5.667
+7,1,Damon Jordan,separatist,Mar Tuuk,Providence-class Carrier (cis),235,342,4,0,2,0,2,56,7,0,398,2,2243,120,5.11,6.0,19.667
+8,1,Joseph Morton,separatist,TF-1726,Providence-class Carrier (cis),272,396,3,0,3,0,0,0,0,0,396,4,2663,116,4.35,7.25,11.583
+9,1,Jason Dedrick,rebel,Admiral Ackbar,MC30c Scout Frigate,307,400,7,0,0,0,7,0,0,0,400,0,2228,132,5.19,6.6,8.147
+10,1,Jason Hughley,empire,Moff Jerjerrod,Imperial II-Class Star Destroyer,286,389,4,0,2,0,2,0,0,0,389,11,1803,175,5.37,6.48,5.704
+11,1,Samuel Wang,empire,Admiral Ozzel,Interdictor-class Suppression Refit,203,280,3,0,0,2,1,107,6,4,387,13,1567,116,5.0,7.25,4.917
+12,1,Samuel Simon,empire,Moff Jerjerrod,Imperial II-Class Star Destroyer,199,280,3,0,1,0,2,120,8,5,400,0,1913,136,4.84,6.8,5.187
+13,1,Andrew Preyer,republic,Admiral Yularen,Pelta-class Transport Frigate,188,257,4,0,0,0,4,134,8,3,391,9,2575,179,5.09,6.63,3.43
+14,1,Mackenzie Dalla Lana,empire,Grand Admiral Thrawn,Imperial II-Class Star Destroyer,176,260,2,0,1,0,1,134,10,4,394,6,1904,207,5.59,6.68,5.354
+15,1,Kyle Campagna,separatist,Mar Tuuk,Providence-class Carrier (cis),234,350,3,0,2,0,1,44,4,0,394,6,1891,100,5.42,5.88,13.256
+16,1,Ryan Becker,rebel,Admiral Raddus,MC75 Armored Cruiser,255,351,4,0,2,0,2,33,2,2,384,16,1684,128,5.16,6.4,5.147
+17,1,Royce Podeszwa,empire,Admiral Piett,Imperial Star Destroyer Cymoon 1 Refit,214,292,4,0,1,0,3,107,6,6,399,1,2374,128,5.01,6.4,7.147
+18,1,James McCartney,republic,Bail Organa,Venator II-class Star Destroyer (gar),186,272,3,0,1,0,2,126,9,3,398,2,1680,186,5.79,6.89,1.35
+19,1,Dennis Raschke,empire,Admiral Sloane,Raider I-Class Corvette,199,262,5,0,0,1,4,134,8,5,396,4,837,140,4.92,7.0,0.0
+20,1,Michael Cox,rebel,General Rieekan,Assault Frigate Mk2 B,170,266,4,0,0,1,3,134,8,7,400,0,3107,210,5.26,7.0,2.667
+21,1,Rhys Aghatabay,empire,General Romodi,Onager-class Testbed,242,334,4,0,1,1,2,56,6,1,390,10,1603,202,5.22,6.52,4.312
+22,1,Andrew Graber,empire,Moff Jerjerrod,Imperial II-Class Star Destroyer,199,281,3,0,1,0,2,118,7,5,399,1,468,154,5.17,6.7,0.79
+23,1,Daniel Allen,empire,Moff Jerjerrod,Star Dreadnought Assault Prototype,296,384,3,1,0,0,2,16,1,1,400,0,1920,112,5.71,5.6,18.013
+24,1,Joshua Gorhau,rebel,Leia Organa,CR90 Corvette B,186,285,4,0,0,1,3,115,7,3,400,0,1552,120,5.08,6.0,9.667
+25,1,Jacek Klopotowski,rebel,Admiral Ackbar,Assault Frigate Mk2 B,177,281,4,0,0,1,3,119,7,4,400,0,1081,144,5.16,6.0,7.667
+26,1,Paul Adler,empire,Admiral Ozzel,Victory II-Class Star Destroyer,182,285,4,0,0,1,3,115,8,5,400,0,1871,124,5.25,6.2,6.653
+27,1,Benjamin Baldwin,empire,Admiral Sloane,Raider I-Class Corvette,233,281,5,0,0,1,4,119,7,4,400,0,1633,124,5.04,6.2,4.653
+28,1,Paul Conrad,empire,Admiral Sloane,Imperial II-Class Star Destroyer,197,271,3,0,1,1,1,129,8,5,400,0,1335,132,4.97,6.6,2.28
+29,1,Paul Heaver,separatist,Mar Tuuk,Providence-class Carrier (cis),296,398,4,0,3,0,1,0,0,0,398,2,3335,108,4.7,6.75,1.583
+30,1,Matthew Moncrief,rebel,Admiral Raddus,CR90 Corvette B,170,258,4,0,1,0,3,134,8,3,392,8,1288,136,5.24,5.91,5.184
+31,1,Adam Newton,rebel,Admiral Ackbar,Assault Frigate Mk2 B,152,255,4,0,0,1,3,134,8,4,389,11,1743,216,6.02,6.75,0.917
+32,1,Colin Looney,empire,Admiral Sloane,Imperial Star Destroyer Kuat Refit,189,271,3,0,1,1,1,129,8,6,400,0,1263,128,5.66,6.4,1.747
+33,1,Nicholas Larson,republic,Bail Organa,Venator II-class Star Destroyer (gar),174,261,3,0,1,0,2,131,9,4,392,8,994,108,4.84,6.75,0.917
+34,1,Justin Schoonmaker,separatist,Admiral Trench,Recusant Support Destroyer,180,260,2,0,2,0,0,134,10,4,394,6,867,160,5.65,6.67,0.259
+35,1,Scott Bellamy,rebel,Admiral Ackbar,MC80 Command Cruiser,240,360,4,0,2,0,2,39,3,0,399,1,2503,108,4.95,5.4,20.613
+36,1,Aron Huckaba,rebel,Kyrsta Agate,Providence-class Carrier (reb),263,366,6,0,1,0,5,33,2,2,399,1,1407,145,5.6,5.37,10.701
+37,1,Greg Fyfe,separatist,Admiral Trench,Providence-class Dreadnought,206,309,3,0,2,0,1,91,6,4,400,0,1609,124,4.84,6.2,5.787
+38,1,Kyle Holt,empire,Admiral Motti,Interdictor-class Suppression Refit,250,310,3,0,0,3,0,88,6,4,398,2,1937,104,4.64,6.5,5.667
+39,1,Kevin Leintz,republic,Bail Organa,Venator II-class Star Destroyer (gar),208,292,3,0,1,1,1,110,6,4,402,-2,1371,148,5.19,6.17,4.481
+40,1,Matthew Ansley,empire,General Romodi,Imperial II-Class Star Destroyer,195,269,3,0,1,0,2,129,7,5,398,2,1941,104,4.79,6.5,5.667
+41,1,Robert Coldwell,separatist,General Grievous,Providence-class Carrier (cis),173,266,3,0,1,0,2,123,11,2,389,11,1174,120,5.04,6.0,3.333
+42,1,Jerzy Frączek,empire,Grand Admiral Thrawn,Imperial II-Class Star Destroyer,228,319,4,0,1,0,3,78,6,3,397,3,1171,104,4.85,6.5,3.0
+43,1,Andrew Armbruster,rebel,Kyrsta Agate,MC80 Battle Cruiser,165,256,3,0,1,0,2,133,8,5,389,11,785,167,6.03,6.19,1.132
+44,1,Robin Sather,rebel,Commander Sato,MC30c Scout Frigate,182,284,3,0,1,0,2,115,6,6,399,1,2529,116,4.81,5.8,15.187
+45,1,Paul Tomashevskyi,empire,Admiral Motti,Imperial II-Class Star Destroyer,271,393,4,0,1,1,2,0,0,0,393,7,1395,100,5.01,6.25,10.917
+46,1,Eric Burtch,empire,Admiral Ozzel,Imperial II-Class Star Destroyer,199,278,3,0,1,0,2,121,7,4,399,1,1310,104,5.93,5.2,16.387
+47,1,Sean Newman,rebel,Kyrsta Agate,Starhawk-class Battleship Mark I,214,304,3,0,1,0,2,95,5,4,399,1,1102,100,4.06,6.25,8.25
+48,1,Justin Preyer,empire,Moff Jerjerrod,Imperial II-Class Star Destroyer,286,395,4,0,2,0,2,0,0,0,395,5,1520,175,5.86,5.65,9.404
+49,1,Nicholas Brown,rebel,Admiral Raddus,MC80 Command Cruiser,272,391,4,0,2,0,2,0,0,0,391,9,1307,92,4.84,5.11,11.313
+50,1,Mitchell Fallinger,republic,Luminara Unduli,Acclamator II-class Assault Ship,251,366,4,0,1,1,2,33,2,2,399,1,2418,140,5.85,5.83,7.148
+51,1,Matthew Stoebner,empire,Moff Jerjerrod,Imperial II-Class Star Destroyer,286,395,4,0,2,0,2,0,0,0,395,5,1486,136,5.32,5.67,4.704
+52,1,Lewis Wright,empire,Admiral Ozzel,Imperial I-Class Star Destroyer,188,263,3,0,1,0,2,125,6,4,388,12,1376,136,5.63,5.67,7.37
+53,1,Joseph Nelligan,rebel,Kyrsta Agate,MC75 Ordnance Cruiser,230,321,5,0,1,0,4,79,4,4,400,0,1834,172,6.15,6.14,2.932
+54,1,David Holmes,empire,Grand Moff Tarkin,Imperial II-Class Star Destroyer,208,289,3,0,1,0,2,102,6,5,391,9,1234,133,5.56,4.93,11.538
+55,1,Bodhi Lovely,rebel,Admiral Ackbar,MC30c Scout Frigate,200,337,4,0,0,0,4,61,6,2,398,2,1678,124,5.13,5.17,14.926
+56,1,Landon Vomastic,empire,Darth Vader,Imperial Star Destroyer Cymoon 1 Refit,239,335,4,0,1,0,3,63,5,3,398,2,2511,100,5.78,5.0,13.333
+57,1,Robert Podeszwa,rebel,Kyrsta Agate,Providence-class Carrier (reb),201,272,4,0,1,0,3,128,7,5,400,0,2778,145,5.9,5.37,5.195
+58,1,Eric Connors,rebel,Kyrsta Agate,Starhawk-class Battleship Mark I,176,258,3,0,1,0,2,130,8,2,388,12,1377,136,5.95,5.67,7.481
+59,1,Aaron Hudson,separatist,Kraken,Recusant Light Destroyer,279,367,5,0,1,0,4,32,4,0,399,1,1499,132,5.36,5.5,6.333
+60,1,Eric Pearson,separatist,Mar Tuuk,Providence-class Dreadnought,243,361,3,0,1,2,0,32,4,0,393,7,1711,112,5.31,5.6,2.213
+61,1,Nicholas Griffiths,empire,Moff Jerjerrod,Imperial II-Class Star Destroyer,240,314,2,0,2,0,0,84,4,4,398,2,1908,152,5.6,5.63,2.183
+62,1,Derek MacKinnon,empire,Admiral Sloane,Quasar Fire I-class Cruiser-Carrier,197,271,3,0,1,1,1,128,7,5,399,1,531,96,4.74,6.0,2.0
+63,1,William Oder,separatist,TF-1726,Recusant Light Destroyer,253,336,5,0,1,1,3,56,4,2,392,8,1169,96,4.33,6.0,1.333
+64,1,Jacob Thompson,rebel,Admiral Raddus,CR90 Corvette A,179,291,4,0,1,0,3,101,6,4,392,8,2197,120,5.02,5.0,10.333
+65,1,Aidan Broome,empire,Admiral Motti,Interdictor-class Suppression Refit,229,323,3,0,1,1,1,77,4,4,400,0,1394,104,5.19,5.2,9.987
+66,1,Ian Halterman,rebel,Kyrsta Agate,Providence-class Carrier (reb),201,278,4,0,1,0,3,121,7,5,399,1,2067,124,5.58,5.17,9.37
+67,1,Christopher McWilliam,separatist,Mar Tuuk,Hardcell-class Transport,278,398,4,0,1,2,1,0,0,0,398,2,1924,128,4.84,5.33,8.481
+68,1,Michael Lyssy,separatist,General Grievous,Providence-class Dreadnought,194,287,3,0,1,1,1,113,10,2,400,0,1346,92,4.68,5.75,4.917
+69,1,Nathan Ray,empire,Admiral Sloane,Gladiator I-Class Star Destroyer,200,298,5,0,0,1,4,95,6,4,393,7,1554,128,5.26,5.33,3.148
+70,1,Andrew Clarke,rebel,Kyrsta Agate,Starhawk-class Battleship Mark I,214,298,3,0,1,0,2,87,6,2,385,15,1169,132,5.1,5.5,3.0
+71,1,Ian Franklin,empire,Moff Jerjerrod,Star Dreadnought Command Prototype,220,272,1,1,0,0,0,125,6,4,397,3,798,112,5.26,5.6,2.28
+72,1,Ryan Kubryn,empire,Admiral Motti,Imperial II-Class Star Destroyer,289,393,4,0,2,0,2,0,0,0,393,7,270,116,5.47,5.8,1.587
+73,1,Hiroki Ogawa,separatist,General Grievous,Providence-class Dreadnought,206,307,3,0,2,0,1,87,8,2,394,6,1997,96,4.75,4.8,14.32
+74,1,Michael Wright,republic,Luminara Unduli,Venator II-class Star Destroyer (gar),190,271,3,0,1,0,2,128,8,4,399,1,1831,116,5.16,4.83,14.259
+75,1,Patrick Logan,republic,Luminara Unduli,Pelta-class Transport Frigate,261,352,4,0,1,1,2,47,2,2,399,1,2226,112,5.06,4.67,11.926
+76,1,Justin Rasmussen,rebel,General Madine,CR90 Corvette A,227,351,5,0,0,0,5,49,4,1,400,0,2586,128,5.78,4.74,10.435
+77,1,William Gutierrez Gonzalez,separatist,TF-1726,Hardcell-class Transport,234,352,3,0,2,0,1,48,6,0,400,0,1470,102,4.45,4.43,8.513
+78,1,Will Ross,separatist,Mar Tuuk,Providence-class Carrier (cis),197,299,4,0,1,0,3,100,10,1,399,1,1902,140,5.79,5.0,7.333
+79,1,Christopher Ernest,rebel,General Cracken,MC30c Torpedo Frigate,162,265,4,0,0,0,4,127,7,4,392,8,861,124,6.01,5.17,5.815
+80,1,Evan Rice,rebel,Admiral Raddus,CR90 Corvette B,234,338,5,0,1,0,4,55,4,2,393,7,769,100,5.47,5.0,4.667
+81,1,Ryder Curry,rebel,Admiral Ackbar,Assault Frigate Mk2 B,203,320,4,0,0,1,3,78,6,3,398,2,1181,132,5.27,5.5,3.0
+82,1,Nicholas Kolker,empire,Admiral Screed,Imperial Star Destroyer Kuat Refit,287,396,5,0,1,0,4,0,0,0,396,4,1580,84,3.98,5.25,15.583
+83,1,Steve Cornell,separatist,Admiral Trench,Providence-class Carrier (cis),258,368,4,0,2,0,2,32,4,0,400,0,2075,88,4.16,4.4,15.213
+84,1,Derek Cummings,republic,Admiral Tarkin,Victory I-Class Star Destroyer (gar),256,395,4,0,0,3,1,0,0,0,395,5,1338,88,4.78,4.4,12.547
+85,1,Forrest Weigel,empire,Admiral Piett,Imperial II-Class Star Destroyer,223,290,3,0,1,1,1,109,6,6,399,1,1134,100,4.86,5.0,6.333
+86,1,Marcus Kubryn,empire,Admiral Motti,Imperial II-Class Star Destroyer,288,394,3,0,2,0,1,0,0,0,394,6,1173,92,4.83,4.6,6.147
+87,1,Lucas Woolard,rebel,Admiral Raddus,CR90 Corvette A,175,266,4,0,1,0,3,134,8,4,400,0,1415,116,5.45,4.83,6.481
+88,1,Andy Jackson,republic,Admiral Yularen,Pelta-class Medical Frigate,194,281,3,0,1,0,2,119,8,2,400,0,1686,124,5.61,5.17,2.259
+89,1,Matt Somes,rebel,General Rieekan,CR90 Corvette A,193,302,4,0,1,0,3,98,6,6,400,0,2115,92,4.7,3.83,19.815
+90,1,Christian Garcia,rebel,General Draven,Providence-class Carrier (reb),170,264,3,0,1,0,2,133,8,5,397,3,1510,96,5.45,4.0,16.667
+91,1,Aiden Jablonski,empire,Darth Vader,Imperial II-Class Star Destroyer,253,350,3,0,2,0,1,47,4,2,397,3,1769,80,3.29,5.0,11.333
+92,1,Adam Momsen,rebel,Admiral Ackbar,Assault Frigate Mk2 B,203,319,4,0,0,1,3,81,6,4,400,0,1904,80,4.24,5.0,12.0
+93,1,Joseph Ziebelman,rebel,Admiral Ackbar,MC30c Scout Frigate,216,333,4,0,0,0,4,67,4,2,400,0,1232,94,4.47,4.09,13.778
+94,1,Aaron Klingbeil,rebel,Admiral Ackbar,Pelta Assault Ship,220,395,5,0,0,0,5,0,0,0,395,5,2554,88,3.96,4.4,9.147
+95,1,Brooke Kortenbusch,empire,General Romodi,Interdictor-class Suppression Refit,233,311,3,0,1,1,1,89,4,4,400,0,2031,136,5.88,4.0,14.667
+96,1,Drew Hunnicutt,separatist,Kraken,Providence-class Carrier (cis),250,367,5,0,1,0,4,32,4,0,399,1,1597,113,6.28,4.91,8.677
+97,1,Jared Eslick-Coats,rebel,Kyrsta Agate,MC30c Torpedo Frigate,188,299,4,0,0,0,4,101,6,3,400,0,1326,92,4.46,4.6,8.88
+98,1,Aaron Ray,republic,Luminara Unduli,Venator I-class Star Destroyer,235,308,3,0,2,0,1,89,5,3,397,3,1005,104,5.52,4.33,9.259
+99,1,Justin Campeau,republic,Anakin Skywalker,Consular-class Armed Cruiser,323,385,8,0,0,1,7,0,0,0,385,15,253,96,5.05,4.8,0.72
+100,1,Tyler Szorcsik,republic,Plo Koon,Venator II-class Star Destroyer (gar),201,276,3,0,1,1,1,122,8,3,398,2,814,151,5.68,4.87,0.689
+101,1,Matthew Chambers,empire,Admiral Ozzel,Imperial II-Class Star Destroyer,205,284,3,0,1,0,2,116,6,4,400,0,1622,91,5.47,3.37,19.455
+102,1,Rob Harrison,rebel,Admiral Ackbar,Assault Frigate Mk2 B,246,343,5,0,0,1,4,55,4,2,398,2,1446,148,5.88,4.77,8.917
+103,1,John Fischer,separatist,Mar Tuuk,Providence-class Carrier (cis),261,351,4,0,2,0,2,42,4,1,393,7,920,90,5.18,3.91,10.517
+104,1,Batlomiej Przybysz,rebel,General Cracken,CR90 Corvette A,195,273,4,0,0,0,4,125,7,5,398,2,954,84,4.59,4.2,7.32
+105,1,Christopher Dyson,rebel,Kyrsta Agate,MC75 Armored Cruiser,174,267,4,0,1,0,3,133,8,5,400,0,1024,96,4.98,4.0,8.333
+106,1,Charles White,separatist,Mar Tuuk,Providence-class Carrier (cis),237,339,3,0,2,0,1,57,6,0,396,4,553,96,5.47,4.0,9.667
+107,1,Mariano Banchero,empire,Admiral Piett,Interdictor-class Suppression Refit,233,318,3,0,1,1,1,74,4,4,392,8,1072,124,5.63,4.43,8.388
+108,1,Robert Olmsted,empire,Admiral Ozzel,Raider I-Class Corvette,200,271,4,0,1,0,3,127,12,0,398,2,1804,80,4.55,3.33,20.815
+109,1,Jakub Charmo,empire,General Tagge,Imperial II-Class Star Destroyer,266,383,5,0,1,0,4,16,2,0,399,1,986,114,5.59,3.68,11.902
+110,1,Tim Bailey,rebel,Admiral Ackbar,Pelta Assault Ship,260,343,5,0,0,0,5,56,4,1,399,1,1086,72,5.13,3.6,12.747
+111,1,Timothy Surburg,separatist,Mar Tuuk,Munificent-class Star Frigate,252,351,4,0,1,2,1,48,6,0,399,1,1174,84,4.85,4.2,3.12
+112,1,Nathanial Beaver,separatist,General Grievous,Providence-class Carrier (cis),173,268,3,0,1,0,2,129,12,2,397,3,430,76,5.45,3.8,7.653
+113,1,Devon Balas,empire,Admiral Ozzel,Raider I-Class Corvette,178,260,5,0,0,0,5,133,8,7,393,7,780,80,4.19,4.0,4.667
+114,1,Josh Phipps,rebel,Kyrsta Agate,MC75 Armored Cruiser,223,331,4,0,1,0,3,61,6,2,392,8,268,84,4.93,4.2,3.12
+115,1,David Huber,rebel,Kyrsta Agate,MC80 Star Cruiser,221,345,4,0,1,0,3,55,6,1,400,0,203,90,5.24,3.91,6.126
+116,1,Robert Schaefer,empire,Admiral Sloane,Imperial II-Class Star Destroyer,197,281,3,0,1,1,1,119,8,5,400,0,705,48,4.94,2.82,12.047
+117,1,Kyle Bowen,republic,Admiral Yularen,Pelta-class Medical Frigate,186,265,3,0,1,0,2,129,8,3,394,6,284,84,5.1,3.5,9.667
+118,1,Kale Campagna,empire,Grand Moff Tarkin,Imperial Star Destroyer Cymoon 1 Refit,272,365,4,0,1,0,3,30,2,2,395,5,858,68,4.47,4.25,8.917
+119,1,William Schuman,empire,Admiral Motti,Imperial II-Class Star Destroyer,263,351,3,0,2,0,1,48,4,3,399,1,477,68,4.97,4.25,6.917
+120,1,Owen Evans,rebel,General Dodonna,Hammerhead Torpedo Corvette,278,385,5,0,2,0,3,0,0,0,385,15,521,88,4.85,4.4,4.947
+121,1,John Benedict,empire,Grand Admiral Thrawn,Imperial Star Destroyer Cymoon 1 Refit,187,266,3,0,1,0,2,133,7,1,399,1,1373,72,5.01,3.0,16.0
+122,1,Dennis Backofen,separatist,TF-1726,Providence-class Carrier (cis),287,394,4,0,2,0,2,0,0,0,394,6,961,82,5.67,3.04,13.903
+123,1,Shawn Tweten,republic,Bail Organa,Venator II-class Star Destroyer (gar),208,292,3,0,1,1,1,110,6,4,402,-2,1183,68,4.82,3.4,9.147
+124,1,Jacob Amos-Landgraf,separatist,Admiral Trench,Hardcell-class Transport,229,327,3,0,2,0,1,73,4,4,400,0,469,58,4.17,3.22,7.473
+125,1,Eric Kingsley,empire,Grand Moff Tarkin,Imperial Star Destroyer Cymoon 1 Refit,245,335,4,0,1,0,3,65,4,4,400,0,280,88,5.76,3.67,4.815
+126,1,James Godfrey,rebel,General Rieekan,CR90 Corvette B,249,364,6,0,1,0,5,29,2,2,393,7,321,72,5.94,3.6,3.547
+127,1,William Welch,rebel,General Dodonna,CR90 Corvette A,217,307,4,0,1,0,3,89,7,1,396,4,2057,60,3.77,3.75,18.25
+128,1,Christopher Cottrill,separatist,TF-1726,Recusant Light Destroyer,233,336,5,0,1,0,4,64,8,0,400,0,755,64,4.51,3.2,11.987
+129,1,Steve Smaha,separatist,Mar Tuuk,Providence-class Carrier (cis),197,315,4,0,1,0,3,84,6,3,399,1,630,60,4.03,3.75,6.25
+130,1,Tom Kolker,republic,Luminara Unduli,Venator II-class Star Destroyer (gar),290,396,4,0,2,0,2,0,0,0,396,4,128,76,4.81,3.8,6.253
+131,1,Ryan Neupert,empire,Admiral Piett,Imperial II-Class Star Destroyer,247,313,4,0,1,0,3,86,5,4,399,1,626,60,4.84,3.75,4.25
+132,1,Matt Palo,rebel,Admiral Raddus,MC80 Assault Cruiser,259,351,4,0,2,0,2,49,3,2,400,0,557,60,4.67,3.75,0.917
+133,1,Ricardo Marmolejo,empire,Grand Moff Tarkin,Imperial Star Destroyer Cymoon 1 Refit,239,312,3,0,1,2,0,87,4,4,399,1,1106,56,4.48,3.5,11.0
+134,1,William Brand,empire,General Romodi,Star Dreadnought Assault Prototype,296,389,3,1,0,0,2,0,0,0,389,11,762,64,5.09,3.2,7.12
+135,1,Justin Robbins,rebel,Kyrsta Agate,MC80 Assault Cruiser,254,358,4,0,2,0,2,42,6,0,400,0,429,80,5.67,3.33,3.037
+136,1,Mathew Schlueter,republic,Bail Organa,Venator II-class Star Destroyer (gar),208,292,3,0,1,1,1,110,6,4,402,-2,518,76,5.58,4.75,0.344
+137,1,Mitchell Trantham,empire,Admiral Sloane,Quasar Fire I-class Cruiser-Carrier,237,314,4,0,0,3,1,86,6,2,400,0,565,35,4.34,1.75,1.344
+138,1,Adam Klopfenstein,empire,Grand Moff Tarkin,Imperial Star Destroyer Cymoon 1 Refit,241,344,3,0,1,1,1,54,6,0,398,2,1045,52,4.21,3.25,2.25
+139,1,Andrew Koltun,separatist,Mar Tuuk,Hardcell-class Transport,317,393,5,0,2,0,3,0,0,0,393,7,368,52,4.38,3.25,2.25
+140,1,Roy Drum,empire,Admiral Screed,Imperial Star Destroyer Cymoon 1 Refit,231,313,4,0,1,0,3,71,4,4,384,16,799,60,5.42,3.0,8.0
+141,1,Daniel Hrobar,empire,Grand Admiral Thrawn,Imperial II-Class Star Destroyer,231,315,4,0,1,0,3,85,4,3,400,0,830,64,4.93,3.2,1.387
+142,1,Greg Goodwin,separatist,Mar Tuuk,Recusant Light Destroyer,209,302,4,0,1,0,3,91,6,4,393,7,419,48,4.38,3.0,2.0
+143,1,Dennis Daniels,empire,Moff Jerjerrod,Imperial Star Destroyer Cymoon 1 Refit,320,393,4,0,2,1,1,0,0,0,393,7,418,44,3.73,2.75,12.25
+144,1,Josiah Nelson,rebel,Admiral Ackbar,MC80 Assault Cruiser,200,294,3,0,1,1,1,105,6,3,399,1,126,54,4.58,2.35,1.698
+145,1,Andrew Doty,republic,Bail Organa,Acclamator I-class Assault Ship,201,283,3,0,1,1,1,117,8,3,400,0,508,57,4.17,3.8,5.48
+146,1,Atticus Rampson,rebel,Admiral Raddus,MC30c Torpedo Frigate,202,319,3,0,1,0,2,77,5,3,396,4,286,32,4.41,2.0,1.333

@@ -109,6 +109,7 @@ fu AS ({get_upgrades_summary}),
 SELECT
     fl.id AS id,
     fl.event_id AS event_id,
+    fl.player AS player,
     fn.name AS faction,
     co.commander AS commander,
     co.flagship AS flagship,
