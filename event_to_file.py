@@ -310,25 +310,32 @@ def get_scores(rounds, conn, ev_id):
             if len(info) == 6:
                 playerA = clean_name(info[0].text)
                 ptsA = int(info[1].text)
+                tpA = int(info[2].text)
                 playerB = clean_name(info[3].text)
                 ptsB = int(info[4].text)
+                tpB = int(info[5].text)
             elif len(info) == 4:
                 if info[0].text == 'Bye':
                     playerA = None
-                    ptsA = None
+                    ptsA = 0
+                    tpA = 3
                     playerB = clean_name(info[1].text)
                     ptsB = 140
+                    tpB = 8
                 elif info[3].text == 'Bye':
                     playerA = clean_name(info[0].text)
                     ptsA = 140
+                    tpA = 8
                     playerB = None
-                    ptsB = None
+                    ptsB = 0
+                    tpB = 3
                 else:
                     continue
             else:
                 continue
 
-            insert_values += [(ev_id, ii+1, playerA, ptsA, playerB, ptsB)]
+            insert_values += [(ev_id, ii+1, playerA, ptsA, tpA, playerB)]
+            insert_values += [(ev_id, ii+1, playerB, ptsB, tpB, playerA)]
 
     cursor.executemany(insert_str, insert_values)
     conn.commit()
