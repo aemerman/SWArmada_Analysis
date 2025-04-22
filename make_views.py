@@ -226,21 +226,55 @@ GROUP BY q.id, fl.event_id
 """
 
 if __name__ == "__main__":
-    sql_path = 'data/armada_events.sql'
+    parser = argparse.ArgumentParser(
+        prog="make_views",
+        description="program to add summary statistics to Armada SQL DB")
+    parser.add_argument("db_path", type=str, default='data/armada_events.sql')
+    parser.add_argument("-f", "--force", action='store_true',
+                        description="Overwrite views in DB if they exist")
+    parser.add_argument("--no-fleets", action='store_true')
+    parser.add_argument("--no-ships", action='store_true')
+    parser.add_argument("--no-squadrons", action='store_true')
+    args = parser.parse_args()
+
+    sql_path = args.db_path
+    if not os.path.isfile(sql_path):
+        print('DB path must be a file.')
+        parser.print_usage()
+        exit()
+
+    do_fleets = not args.no_fleets
+    do_ships = not args.no_ships
+    do_squadrons = not args.no_squadrons
+
     conn = sqlite3.connect(sql_path)
     cursor = conn.cursor()
 
-    res = cursor.execute(view_fleet_summary)
-    res = cursor.execute(view_ship_summary)
-    res = cursor.execute(view_squadron_summary)
+    if do_fleets:
+        if args.force:
+            cursor.execute('DROP VIEW Fleet_Summary')
+        res = cursor.execute(view_fleet_summary)
+        conn.commit()
 
-    conn.commit()
+        df_fleet = pd.read_sql_query('SELECT * FROM Fleet_Summary', conn)
+        df_fleet.to_csv('data/fleet_summary.csv', index=False)
 
-    df_fleet = pd.read_sql_query('SELECT * FROM Fleet_Summary', conn)
-    df_fleet.to_csv('data/fleet_summary.csv', index=False)
-    # df_ship = pd.read_sql_query('SELECT * FROM Ship_Summary', conn)
-    # df_ship.to_csv('data/ship_summary.csv', index=False)
-    # df_squad = pd.read_sql_query('SELECT * FROM Squadron_Summary', conn)
-    # df_squad.to_csv('data/squadron_summary.csv', index=False)
+    if do_ships:
+        if args.force:
+            cursor.execute('DROP VIEW Ship_Summary')
+        res = cursor.execute(view_ship_summary)
+        conn.commit()
 
-    #conn.close()
+        df_ship = pd.read_sql_query('SELECT * FROM Ship_Summary', conn)
+        df_ship.to_csv('data/ship_summary.csv', index=False)
+
+    if do_squadrons:
+        if args.force:
+            cursor.execute('DROP VIEW Squadron_Summary')
+        res = cursor.execute(view_squadron_summary)
+        conn.commit()
+
+        df_squad = pd.read_sql_query('SELECT * FROM Squadron_Summary', conn)
+        df_squad.to_csv('data/squadron_summary.csv', index=False)
+
+    conn.close()
