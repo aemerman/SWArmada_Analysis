@@ -1,6 +1,10 @@
 # -*- coding: utf-8 -*-
 """
-Created on Sun Mar 30 16:04:06 2025
+Webdriver
+
+Use selenium to open an events page on T4.tools, wait for the Javascript to
+load event information into the html tree, including fleet lists and tournament
+results. The html tree is sent to event_to_file for parsing.
 
 @author: alexe
 """

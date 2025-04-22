@@ -1,11 +1,24 @@
 # -*- coding: utf-8 -*-
 """
-Created on Mon Mar 31 14:20:59 2025
+Event to File
+
+Given the html tree from an event page on T4.tools, this code will look through
+the tree for event, fleet, and results information, and add it to the SQL DB.
+Fleet information takes the most work. First, the fleet list is fed to an LLM
+to get a dictionary of ship, squadron, and upgrade names from the raw text.
+Then the names are connected to primary keys in the DB. This can generally be
+done automatically, but in rare cases of ambiguity or typos the user will be
+asked to provide the correct, unambiguous name. Finally, once all primary keys
+have been found, the fleet can be inserted into the DB.
+
+Six tables are affected by this file:
+    Events - add event info if the url is not yet in the DB
+    Scores - add results info if do_scores flag is True
+    Fleets, Fleets_Ships, Fleets_Squadrons, Fleets_Upgrades - add fleet
+        information if do_fleets flag is True.
 
 @author: alexe
 """
-from bs4 import BeautifulSoup
-import pandas as pd
 import json
 import os
 import fleet_parser
@@ -17,6 +30,9 @@ def clean_name(name):
     name = name.replace(',',' ')
     return ' '.join(name.strip().split())
 
+# Get the primary key of the last insert. When using the auto-increment
+# functionality to generate primary keys, this function can be used to retrieve
+# the new key to use as a foreign key in other tables.
 def get_last_primary_key(cursor):
     res = cursor.execute('SELECT last_insert_rowid()')
     try:
@@ -26,6 +42,7 @@ def get_last_primary_key(cursor):
         rowid = None
     return rowid
 
+# Wrapper function to add some error handling to a generic SQL query.
 def get_from_sql(cursor, query, params=()):
     try:
         res = cursor.execute(query, params).fetchall()
@@ -44,6 +61,8 @@ def get_from_sql(cursor, query, params=()):
     else:
         return res
 
+# Wrapper function specifically for SQL queries that expect exactly one row
+# and column to be returned.
 def get_one_from_sql(cursor, query, params):
     res = get_from_sql(cursor, query, params)
     if res and len(res) == 1:
@@ -295,6 +314,11 @@ def get_fleet_lists(fleets, conn, ev_id):
             cursor.execute(insert_squadrons_str, squad_values)
         conn.commit()
 
+# Parse results information
+# Results rows will either contain six pieces of information, or four in case
+# of a bye. TP information is mostly redundant with points but needs to be
+# saved because the second player wins ties, and second player info is not
+# stored on T4.
 def get_scores(rounds, conn, ev_id):
 
     cursor = conn.cursor()
@@ -342,8 +366,10 @@ def get_scores(rounds, conn, ev_id):
     cursor.executemany(insert_str, insert_values)
     conn.commit()
 
+# Main function to get (or create) event_id and then call results and fleets
+# parsers.
 def parse_site(soup, url, name, do_scores=True, do_fleets=True):
-    sql_path = 'data/armada_events.sql'
+    sql_path = 'data/armada_events.sql' #TODO: make input param?
     conn = sqlite3.connect(sql_path)
     cursor = conn.cursor()
 
@@ -374,12 +400,13 @@ def parse_site(soup, url, name, do_scores=True, do_fleets=True):
         ev_id = get_last_primary_key(cursor)
         print(f'Added new event with ID: {ev_id}')
 
-    # add results to event_results csv
+    # add results
     if do_scores:
         rounds = soup.find(id='uncontrolled-tab-example-tabpane-rounds')
         get_scores(rounds, conn, ev_id)
         conn.commit()
 
+    # add fleets
     if do_fleets:
         fleets = soup.find(id='uncontrolled-tab-example-tabpane-lists')
         get_fleet_lists(fleets, conn, ev_id)

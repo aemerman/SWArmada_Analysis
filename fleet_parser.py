@@ -1,6 +1,16 @@
 # -*- coding: utf-8 -*-
 """
-Created on Mon Mar 31 09:24:49 2025
+Fleet Parser
+
+Use an LLM to convert Armada fleet lists from raw text into a dictionary.
+The dictionary is validated to make sure all required fields are present before
+being passed back. The values of the fields are not validated though.
+
+I am using the free tier of Google's Gemini AI for parsing. As of writing,
+Gemini allows 15 requests/minute for free which is enough for most Armada
+tournaments without hitting the limit, and means the largest tournaments take
+around 10 minutes to parse. I put my API key in a config file not included in
+the github repo, you will need to replace this with your own API key.
 
 @author: alexe
 """
@@ -11,13 +21,11 @@ logging.basicConfig(
     filename = "logs/parser.log",
     filemode = "a",
     level = logging.WARNING)
-import pandas as pd
 import json
-import re
 import time
 from huggingface_hub import InferenceClient
 from google import genai
-import config
+from config import GEMINI_API_KEY, HUGGINGFACE_API_KEY
 
 
 # Fleet parsers provide methods to convert text string into dictionary with
@@ -43,6 +51,7 @@ json_format = """
   }}
 """
 
+# Make sure that all required fields are present in the JSON string
 def validate_json(llm_response):
     lines = llm_response.splitlines()
     res_json = None
@@ -78,7 +87,7 @@ def validate_json(llm_response):
     # Give up after second attempt
     if not res_json:
         return None
-    
+
     # JSON string has been successfully converted to dictionary.
     # Now check that all required fields are present.
     if not 'ships' in res_json or len(res_json['ships']) < 1:
@@ -103,12 +112,12 @@ def validate_json(llm_response):
 
 def parse_fleet_llm(fleet):
     if not hasattr(parse_fleet_llm, 'client'):
-        parse_fleet_llm.client = genai.Client(api_key=config.GEMINI_API_KEY)
+        parse_fleet_llm.client = genai.Client(api_key=GEMINI_API_KEY)
         # parse_fleet_llm.client = InferenceClient(
         #     provider="novita",
-        #     api_key=config.HUGGINGFACE_API_KEY,
+        #     api_key=HUGGINGFACE_API_KEY,
         # )
-        
+
     prompt = f"""
     # CONTEXT #
     I want to convert a Star Wars Armada fleet list into a standardized format
@@ -122,18 +131,18 @@ def parse_fleet_llm(fleet):
     # RESPONSE #
     Return the fleet list in the following JSON format:
     {json_format}
-    
+
     # INPUT DATA #
     {fleet}
     """
     # prompt = f"""The following text is a star wars armada fleet list. Convert
-    # the text to json in the format {{name: str, faction: str, commander: 
+    # the text to json in the format {{name: str, faction: str, commander:
     # str, ships: [{{name: str, upgrades: [{{name: str, cost: int}}],
-    # total_cost: int}}], squadrons: [{{name: str, count: int, cost: 
+    # total_cost: int}}], squadrons: [{{name: str, count: int, cost:
     # int}}], squadrons_cost: int, total_cost: int}}. Ships are listed with
-    # their upgrades in the same paragraph and costs in parenthesis. Squadrons 
+    # their upgrades in the same paragraph and costs in parenthesis. Squadrons
     # are listed in paragraph at the end.
-    
+
     # {fleet}
     # """
     def get_google_response(prompt):
@@ -150,8 +159,8 @@ def parse_fleet_llm(fleet):
                 contents=prompt
                 )
         return response.text
-        
-        
+
+
     def get_huggingface_response(prompt):
         completion = parse_fleet_llm.client.chat.completions.create(
             model="deepseek-ai/DeepSeek-V3-0324",
@@ -171,7 +180,7 @@ def parse_fleet_llm(fleet):
     if not res_json:
         logging.error(f'Failed to parse LLM response:\n{response}')
         # TODO: try again?
-    
+
     return res_json
 
 def parse_fleet(fleet, **kwargs):

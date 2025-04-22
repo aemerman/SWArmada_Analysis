@@ -1,6 +1,11 @@
 # -*- coding: utf-8 -*-
 """
-Created on Wed Apr  9 10:23:27 2025
+SQL Queries
+
+List of SQL queries as strings for use in adding event info to DB.
+Most of these queries are meant to get a primary key from the DB given some
+information contained in the fleet list. As such, they should return at most
+one row and column.
 
 @author: alexe
 """

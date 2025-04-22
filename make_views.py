@@ -1,12 +1,35 @@
 # -*- coding: utf-8 -*-
 """
-Created on Thu Apr 10 17:41:44 2025
+Make Views
+
+This file contains a set of SQL commands to add summary statistics to the DB.
+The views are:
+    Fleet_Summary - fleet_id, event_id, player name, faction, commander,
+        flagship, points spent on ships, points spent on ships + upgrades,
+        number of ships (split by size category), points spent on squadrons,
+        number of squadrons, number of unique squadrons, point bid,
+        event results: tournament points, margin of victory, strength of
+            schedule, average tournament points per game, variance of
+            tournament points per game
+
+    Ship_Summary - ship_id, event_id, ship name, faction, number of fleets
+        running this ship, average cost and number of upgrades, average cost of
+        squadrons and average bid among fleets running this ship
+
+    Squadron_Summary - squadron_id, event_id, squadron name, faction, number
+        of fleets running this squadron, average cost and number of squadrons
+        among fleets running this squadron, average bid among fleets running
+        this squadron
+
 
 @author: alexe
 """
 import sqlite3
 import pandas as pd
+import argparse
+import os
 
+# Used as CTE to add number of ships to fleet summary
 get_ships_summary = """
 SELECT f.id AS fleet_id,
     COUNT(fs.id) AS num_ships,
@@ -21,6 +44,7 @@ INNER JOIN Ships AS s ON s.id = fs.ship_id
 GROUP BY f.id
 """
 
+# Used as CTE to add number of squadrons to fleet summary
 get_squadrons_summary = """
 SELECT f.id AS fleet_id,
     SUM(fq.count) AS num_squadrons,
@@ -32,6 +56,7 @@ INNER JOIN Squadrons AS s ON s.id = fq.squadron_id
 GROUP BY f.id
 """
 
+# Used as CTE to add upgrade info to fleet summary
 get_upgrades_summary = """
 SELECT f.id AS fleet_id,
     SUM(u.cost) AS upgrades_cost
@@ -42,6 +67,7 @@ INNER JOIN Upgrades AS u ON u.id = fu.upgrade_id
 GROUP BY f.id
 """
 
+# Used as CTE to add commander and flagship to fleet summary
 get_commander = """
 SELECT f.id AS fleet_id,
     un.name AS commander,
@@ -62,6 +88,7 @@ WHERE u.slot_id = 1
 # Getting player stats is a multi-step process. First, use a CTE to calculate
 # margin of victory (MoV) and aggregate tournament points (TP) across the
 # event. Then calculate variance and strength of schedule (SoS) for the event.
+# Used as CTEs to add results info to fleet summary
 get_player_event = """
 player_agg AS (
     SELECT sc1.player AS player,
@@ -96,8 +123,8 @@ pe AS (
     )
 """
 
-# For fleet-level analysis. Popularity of factions and commanders, size of bids
-# and squad-balls. Percentage of Big Heavy vs MSU vs Carrier. Etc
+# Add fleet-level summary to DB for fleet-level analysis. Popularity of
+# factions and commanders, size of bids and squad-balls, etc.
 view_fleet_summary = f"""
 CREATE VIEW IF NOT EXISTS Fleet_Summary AS
 WITH co AS ({get_commander}),
@@ -141,8 +168,8 @@ LEFT JOIN fu ON fu.fleet_id = fl.id
 LEFT JOIN pe ON pe.player = fl.player AND pe.event_id = fl.event_id
 """
 
-# For ship-to-ship comparisons. Popularity of ships, average # and cost of
-# upgrades. Etc
+# Add ship-level summary to DB for ship-to-ship comparisons. Popularity of
+# ships, average number and cost of upgrades, etc.
 view_ship_summary = """
 CREATE VIEW IF NOT EXISTS Ship_Summary AS
 WITH up AS (
@@ -177,8 +204,7 @@ LEFT JOIN up ON s.id = up.ship_id
 GROUP BY s.id, fl.event_id
 """
 
-# For squad-ball comparisons. Popularity of squadrons, correlation to commander
-# and to other squadrons, correlation to squad-ball size. Etc
+# Add squadron-level summary to DB for squad-to-squad comparisons.
 view_squadron_summary = """
 CREATE VIEW IF NOT EXISTS Squadron_Summary AS
 SELECT
