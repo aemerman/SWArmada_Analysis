@@ -37,12 +37,17 @@ def parse_webpage(url, name, do_scores=True, do_fleets=True):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(
-        prog="T4_web_scraper",
+        prog="web_scraper",
         description="program to get SW Armada event data from T4.tools")
-    parser.add_argument("url", type=str)
-    parser.add_argument("-n", "--name", type=str)
-    parser.add_argument("--no-scores", action='store_true')
-    parser.add_argument("--no-fleets", action='store_true')
+    parser.add_argument("url", type=str,
+                    help="URL of tournament that you want to analyze")
+    parser.add_argument("-n", "--name", type=str,
+                        help="Name for tournament within DB (taken from"
+                        + " URL if not specified)")
+    parser.add_argument("--no-scores", action='store_true',
+                        help="flag to skip storing tournament results")
+    parser.add_argument("--no-fleets", action='store_true',
+                        help="flag to skip storing fleet information")
     args = parser.parse_args()
     url = args.url
     name = args.name
